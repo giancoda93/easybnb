@@ -1,0 +1,20 @@
+/* Imports */
+@import url('../styles/fonts.css');
+
+/* ------------------------------------------------------------------------------------- */
+/* Main styles */
+html {
+  background-color: #F2F2F2;
+  font-family: "Quicksand", sans-serif;
+}
+
+body {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1600px;
+  padding: 1rem;
+}
+
+* {
+  box-sizing: border-box;
+}
