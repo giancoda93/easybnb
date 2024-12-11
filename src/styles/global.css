@@ -3,16 +3,24 @@
 
 /* ------------------------------------------------------------------------------------- */
 /* Main styles */
+:root {
+  --bgcolor: #FAFAFA;
+  --textcolor: #18181B;
+  --textgraycolor: #6A6A6A;
+  --grayhovercolor: #E4E4E7;
+  --primarycolor: #FE395C;
+}
+
 html {
-  background-color: #F2F2F2;
+  background-color: var(--bgcolor);
   font-family: "Quicksand", sans-serif;
+  color: var(--textcolor);
 }
 
 body {
   margin: 0 auto;
   width: 100%;
   max-width: 1600px;
-  padding: 1rem;
 }
 
 * {
