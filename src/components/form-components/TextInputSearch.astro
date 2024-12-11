@@ -1,0 +1,53 @@
+---
+const { label, placeholder } = Astro.props
+const dimensions = {
+  spanLineHeight: 16,
+  inputLineHeight: 20,
+  paddingLabel: 16,
+  get labelRadius() {
+    return (this.spanLineHeight + this.inputLineHeight + (this.paddingLabel * 2)) / 2
+  }
+}
+
+const generateCSSConstants = (obj: object, unit: string) => {
+  let constantsArr: string = ""
+  Object.entries(obj).forEach(entry => {
+    let CSSConst = "--" + entry[0] + ": " + entry[1] + unit + "; "
+    constantsArr += CSSConst
+  })
+  return constantsArr
+}
+---
+<label style={generateCSSConstants(dimensions, "px")}>
+  <span>{label}</span>
+  <input 
+    type="text"
+    placeholder={placeholder}
+  >
+</label>
+
+<style>
+  label {
+    display: flex;
+    flex-direction: column;
+    padding: var(--paddingLabel);
+    border-radius: var(--labelRadius);
+  }
+  span {
+    font-size: 0.8em;
+    font-weight: 600;
+    line-height: var(--spanLineHeight);
+  }
+  input {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-family: "Quicksand", sans-serif;
+    font-size: 0.9em;
+    font-weight: normal;
+    line-height: var(--inputLineHeight);
+  }
+  input:focus {
+    outline-style: none;
+  }
+</style>

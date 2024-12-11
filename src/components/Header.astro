@@ -1,7 +1,18 @@
 ---
 import Navbar from "./Navbar.astro"
+import SearchForm from "./SearchForm.astro"
 ---
 
 <header>
   <Navbar />
+  <SearchForm />
 </header>
+
+<style>
+  header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

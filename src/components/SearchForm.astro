@@ -1,0 +1,43 @@
+---
+import TextInputSearch from "./form-components/TextInputSearch.astro"
+
+const largeField = 280
+const smallField = largeField / 2
+---
+<form style={`--largeWidth: ${largeField}px; --smallWidth: ${smallField}px`}>
+  <div class="field large-field">
+    <TextInputSearch label="Dove" placeholder="Cerca destinazioni" />
+  </div>
+  <div class="field-separator"></div>
+  <div class="field small-field">
+    <TextInputSearch label="Check-in" placeholder="Aggiungi date" />
+  </div>
+  <div class="field-separator"></div>
+  <div class="field small-field">
+    <TextInputSearch label="Check-out" placeholder="Aggiungi date" />
+  </div>
+  <div class="field-separator"></div>
+  <div class="field large-field">
+    <TextInputSearch label="Chi" placeholder="Aggiungi ospiti" />
+  </div>
+</form>
+
+<style>
+  form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+  }
+  .large-field {
+    width: var(--largeWidth);
+  }
+  .small-field {
+    width: var(--smallWidth);
+  }
+  .field-separator {
+    background-color: var(--textgraycolor);
+    width: 1px;
+  }
+</style>
