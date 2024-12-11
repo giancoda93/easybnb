@@ -1,10 +1,10 @@
 ---
 import TextInputSearch from "./form-components/TextInputSearch.astro"
+import { searchFormDimensions, generateCSSConstants } from "../styles/constants"
 
-const largeField = 280
-const smallField = largeField / 2
+import SearchIcon from "../../public/search.svg"
 ---
-<form style={`--largeWidth: ${largeField}px; --smallWidth: ${smallField}px`}>
+<form style={generateCSSConstants(searchFormDimensions, "px")}>
   <div class="field large-field">
     <TextInputSearch label="Dove" placeholder="Cerca destinazioni" />
   </div>
@@ -19,6 +19,7 @@ const smallField = largeField / 2
   <div class="field-separator"></div>
   <div class="field large-field">
     <TextInputSearch label="Chi" placeholder="Aggiungi ospiti" />
+    <button type="button"><SearchIcon width={24} height={24} /></button>
   </div>
 </form>
 
@@ -29,15 +30,35 @@ const smallField = largeField / 2
     justify-content: center;
     align-items: center;
     background-color: #FFFFFF;
+    border-radius: var(--formBorderRadius);
+    outline: solid 1px var(--textlightgraycolor);
+    box-sizing: border-box;
+    box-shadow: 2px 2px 10px 5px var(--grayhovercolor);
   }
   .large-field {
-    width: var(--largeWidth);
+    width: var(--largeFieldW);
+    display: flex;
+    align-items: center;
   }
   .small-field {
-    width: var(--smallWidth);
+    width: var(--smallFieldW);
   }
   .field-separator {
-    background-color: var(--textgraycolor);
-    width: 1px;
+    background-color: var(--grayhovercolor);
+    width: 0.84px;
+    height: var(--formBorderRadius);
+  }
+  button {
+    background-color: var(--primarycolor);
+    width: 50px;
+    height: 50px;
+    margin: 0 12px;
+    border-radius: 50%;
+    border: none;
+    color: #FFFFFF;
+  }
+  button:hover {
+    filter: brightness(0.8);
+    cursor: pointer;
   }
 </style>
