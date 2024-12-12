@@ -28,3 +28,9 @@ body {
 * {
   box-sizing: border-box;
 }
+
+h2 {
+  font-weight: 700;
+  font-size: 1em;
+  margin: 0;
+}

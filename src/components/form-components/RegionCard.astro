@@ -1,0 +1,28 @@
+---
+const { image, text } = Astro.props
+---
+<div class="region-card">
+  <img src={image} alt="img">
+  <p>{text}</p>
+</div>
+
+<style>
+  div.region-card {
+    padding: 8px;
+    border-radius: 16px;
+  }
+  div.region-card:hover {
+    cursor: pointer;
+    background-color: var(--grayhovercolor);
+  }
+  img {
+    box-sizing: border-box;
+    width: 105px;
+    height: 105px;
+    border-radius: 16px;
+  }
+  p {
+    font-size: 0.9em;
+    margin: 0;
+  }
+</style>

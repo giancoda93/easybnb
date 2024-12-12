@@ -1,49 +1,91 @@
 ---
 import TextInputSearch from "./form-components/TextInputSearch.astro";
+import RegionPickerDesktop from "./form-components/RegionPickerDesktop.astro";
+
 import { searchFormDimensions, generateCSSConstants } from "../styles/constants";
 
 import SearchIcon from "../../public/search.svg";
 ---
 
 <form style={generateCSSConstants(searchFormDimensions, "px")}>
-  <div class="field field-hover large-field">
-    <TextInputSearch label="Dove" placeholder="Cerca destinazioni" />
+  <!-- Container -->
+  <div class="field-container">
+    <div id="destination" class="field field-hover large-field">
+      <TextInputSearch label="Dove" placeholder="Cerca destinazioni" />
+    </div>
+    <div id="region-picker-wrapper" class="wrapper hidden">
+      <RegionPickerDesktop />
+    </div>
   </div>
+  <!-- Separatore -->
   <div class="field-separator"></div>
-  <div class="field field-hover small-field">
-    <TextInputSearch label="Check-in" placeholder="Aggiungi date" />
+  <!-- Container -->
+  <div class="field-container">
+    <div id="check-in-date" class="field field-hover small-field">
+      <TextInputSearch label="Check-in" placeholder="Aggiungi date" />
+    </div>
+    <div id="date-picker-wrapper" class="wrapper hidden">
+      <!-- qui ci va il componente per la data -->
+    </div>
   </div>
+  <!-- Separatore -->
   <div class="field-separator"></div>
-  <div class="field field-hover small-field">
-    <TextInputSearch label="Check-out" placeholder="Aggiungi date" />
+  <!-- Container -->
+  <div id="check-out-date" class="field-container">
+    <div class="field field-hover small-field">
+      <TextInputSearch label="Check-out" placeholder="Aggiungi date" />
+    </div>
+    <div id="date-picker-wrapper" class="wrapper hidden">
+      <!-- qui ci va il componente per la data -->
+    </div>
   </div>
+  <!-- Separatore -->
   <div class="field-separator"></div>
-  <div class="field field-hover large-field">
-    <TextInputSearch label="Chi" placeholder="Aggiungi ospiti" />
-    <button type="button" id="btn-submit"><SearchIcon width={24} height={24} />
-      <span class="btn-label">Cerca</span>
-    </button>
+  <!-- Container -->
+  <div class="field-container">
+    <div id="guests" class="field field-hover large-field">
+      <TextInputSearch label="Chi" placeholder="Aggiungi ospiti" />
+      <button type="button" id="btn-submit"
+        ><SearchIcon width={24} height={24} />
+        <span class="btn-label">Cerca</span>
+      </button>
+    </div>
+    <div id="guests-picker-wrapper" class="wrapper hidden">
+      <!-- qui ci va il componente per gli ospiti -->
+    </div>
   </div>
 
   <script>
     // costanti per gli script sotto
     const fields = document.querySelectorAll("div.field");
-    const form = document.querySelector("form") as HTMLFormElement
-    const button = document.getElementById("btn-submit") as HTMLButtonElement
+    const form = document.querySelector("form") as HTMLFormElement;
+    const button = document.getElementById("btn-submit") as HTMLButtonElement;
+    const wrappers = document.querySelectorAll(".wrapper")
+    const regionPicker = document.getElementById("region-picker-wrapper") as HTMLDivElement
+    // const datePicker = document.getElementById("date-picker-wrapper") as HTMLDivElement
+    // const guestsPicker = document.getElementById("guests-picker-wrapper") as HTMLDivElement
 
     // ad ogni campo del form aggiungo un event listener
     // al click tutti i campi non cliccati e il form, acquisiscono la classe "inactive" che cambia il colore di sfondo,
     // mentre il campo cliccato acquisisce la classe "focused" e perde "field-hover"
     fields.forEach((field) => {
       field.addEventListener("click", (e) => {
-        fields.forEach(f => {
-          f.classList.add("inactive", "field-hover")
-          f.classList.remove("focused")
+        fields.forEach((f) => {
+          f.classList.add("inactive", "field-hover");
+          f.classList.remove("focused");
+        });
+        wrappers.forEach((w) => {
+          w.classList.add("hidden")
         })
-        form.classList.add("inactive")
-        field.classList.remove("inactive", "field-hover")
-        field.classList.add("focused")
-        button.classList.add("wide")
+        form.classList.add("inactive");
+        field.classList.remove("inactive", "field-hover");
+        field.classList.add("focused");
+        button.classList.add("wide");
+        // Visibilità opzioni al click del campo
+        if (field.id == "destination") regionPicker.classList.remove("hidden")
+        // if (field.id == "check-in-date") datePicker.classList.remove("hidden")
+        // if (field.id == "check-out-date") datePicker.classList.remove("hidden")
+        // if (field.id == "guests") guestsPicker.classList.remove("hidden")
       });
     });
     // cliccando fuori dal form viene rimossa la classe "inactive" sia dai campi
@@ -52,14 +94,17 @@ import SearchIcon from "../../public/search.svg";
     document.addEventListener("click", (e) => {
       const target = e.target as Node;
       if (!form.contains(target)) {
-        fields.forEach(f => {
-          f.classList.remove("inactive", "focused")
-          f.classList.add("field-hover")
+        fields.forEach((f) => {
+          f.classList.remove("inactive", "focused");
+          f.classList.add("field-hover");
+        });
+        wrappers.forEach((w) => {
+          w.classList.add("hidden")
         })
-        form.classList.remove("inactive")
-        button.classList.remove("wide")
+        form.classList.remove("inactive");
+        button.classList.remove("wide");
       }
-    })
+    });
   </script>
 </form>
 
@@ -75,7 +120,11 @@ import SearchIcon from "../../public/search.svg";
     box-sizing: border-box;
     box-shadow: 2px 2px 10px 5px var(--grayhovercolor);
   }
-  form.inactive, .field.inactive {
+  div.field-container {
+    border-radius: inherit;
+  }
+  form.inactive,
+  .field.inactive {
     background-color: var(--bglighgraycolor);
   }
   .field {
@@ -140,14 +189,18 @@ import SearchIcon from "../../public/search.svg";
     filter: brightness(0.8);
     cursor: pointer;
   }
-  
+
+  .hidden {
+    display: none;
+  }
+
   @media screen and (max-width: 850px) {
-   .large-field {
-    width: var(--largeFieldTabletW);
-   }
-   .small-field {
-    width: var(--smallFieldTabletW);
-   } 
+    .large-field {
+      width: var(--largeFieldTabletW);
+    }
+    .small-field {
+      width: var(--smallFieldTabletW);
+    }
   }
   @media screen and (max-width: 760px) {
     form {
