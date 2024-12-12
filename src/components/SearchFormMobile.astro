@@ -1,0 +1,89 @@
+---
+import SearchIcon from "../../public/search.svg";
+import FilterIcon from "../../public/filter.svg";
+---
+
+<div class="search-mobile-container">
+  <div class="search-mobile">
+    <div class="search-button-container">
+      <button class="search-btn">
+        <span class="icon-container">
+          <SearchIcon width={20} height={20} fill={"black"} />
+        </span>
+      </button>
+    </div>
+    <div class="filter-button-container">
+      <button class="filter-btn">
+        <FilterIcon height={20} width={20} fill={"black"} />
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .search-mobile-container {
+    width: 100%;
+    padding: 16px 24px 0 24px;
+  }
+  .search-mobile {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .search-button-container,
+  .filter-button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .search-button-container {
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 28px;
+    box-shadow: 2px 2px 5px 2px var(--grayhovercolor);
+
+    & .icon-container {
+      width: 52px;
+      height: 20px;
+    }
+  }
+  .filter-button-container {
+    height: 100%;
+    width: 50px;
+  }
+
+  .search-btn {
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    border: none;
+    border-radius: inherit;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .filter-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: solid 1px var(--textlightgraycolor);
+  }
+
+  @media screen and (min-width: 760px) {
+    .search-mobile-container {
+      display: none;
+    }
+  }
+</style>

@@ -1,15 +1,18 @@
 ---
 import Navbar from "./Navbar.astro"
 import SearchForm from "./SearchForm.astro"
+import SearchFormMobile from "./SearchFormMobile.astro"
 ---
 
 <header>
   <Navbar />
   <SearchForm />
+  <SearchFormMobile />
 </header>
 
 <style>
   header {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;

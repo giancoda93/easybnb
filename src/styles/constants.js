@@ -30,5 +30,11 @@ export const searchFormDimensions = {
   largeFieldW: 282.5,
   get smallFieldW() {
     return (this.largeFieldW / 2)
+  },
+  get largeFieldTabletW() {
+    return (this.largeFieldW - 30)
+  },
+  get smallFieldTabletW() {
+    return (this.smallFieldW - 15)
   }
 }

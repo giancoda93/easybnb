@@ -140,4 +140,18 @@ import SearchIcon from "../../public/search.svg";
     filter: brightness(0.8);
     cursor: pointer;
   }
+  
+  @media screen and (max-width: 850px) {
+   .large-field {
+    width: var(--largeFieldTabletW);
+   }
+   .small-field {
+    width: var(--smallFieldTabletW);
+   } 
+  }
+  @media screen and (max-width: 760px) {
+    form {
+      display: none;
+    }
+  }
 </style>
