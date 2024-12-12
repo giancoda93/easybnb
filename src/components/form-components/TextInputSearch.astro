@@ -14,6 +14,7 @@ const { label, placeholder } = Astro.props
 <style>
   label {
     flex-grow: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     padding: var(--paddingLabelV) var(--paddingLabelH);
@@ -21,7 +22,6 @@ const { label, placeholder } = Astro.props
   }
   label:hover {
     cursor: pointer;
-    background-color: var(--grayhovercolor);
   }
   span {
     font-size: 0.8em;

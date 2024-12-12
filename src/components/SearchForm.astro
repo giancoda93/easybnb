@@ -1,26 +1,66 @@
 ---
-import TextInputSearch from "./form-components/TextInputSearch.astro"
-import { searchFormDimensions, generateCSSConstants } from "../styles/constants"
+import TextInputSearch from "./form-components/TextInputSearch.astro";
+import { searchFormDimensions, generateCSSConstants } from "../styles/constants";
 
-import SearchIcon from "../../public/search.svg"
+import SearchIcon from "../../public/search.svg";
 ---
+
 <form style={generateCSSConstants(searchFormDimensions, "px")}>
-  <div class="field large-field">
+  <div class="field field-hover large-field">
     <TextInputSearch label="Dove" placeholder="Cerca destinazioni" />
   </div>
   <div class="field-separator"></div>
-  <div class="field small-field">
+  <div class="field field-hover small-field">
     <TextInputSearch label="Check-in" placeholder="Aggiungi date" />
   </div>
   <div class="field-separator"></div>
-  <div class="field small-field">
+  <div class="field field-hover small-field">
     <TextInputSearch label="Check-out" placeholder="Aggiungi date" />
   </div>
   <div class="field-separator"></div>
-  <div class="field large-field">
+  <div class="field field-hover large-field">
     <TextInputSearch label="Chi" placeholder="Aggiungi ospiti" />
-    <button type="button"><SearchIcon width={24} height={24} /></button>
+    <button type="button" id="btn-submit"><SearchIcon width={24} height={24} />
+      <span class="btn-label">Cerca</span>
+    </button>
   </div>
+
+  <script>
+    // costanti per gli script sotto
+    const fields = document.querySelectorAll("div.field");
+    const form = document.querySelector("form") as HTMLFormElement
+    const button = document.getElementById("btn-submit") as HTMLButtonElement
+
+    // ad ogni campo del form aggiungo un event listener
+    // al click tutti i campi non cliccati e il form, acquisiscono la classe "inactive" che cambia il colore di sfondo,
+    // mentre il campo cliccato acquisisce la classe "focused" e perde "field-hover"
+    fields.forEach((field) => {
+      field.addEventListener("click", (e) => {
+        fields.forEach(f => {
+          f.classList.add("inactive", "field-hover")
+          f.classList.remove("focused")
+        })
+        form.classList.add("inactive")
+        field.classList.remove("inactive", "field-hover")
+        field.classList.add("focused")
+        button.classList.add("wide")
+      });
+    });
+    // cliccando fuori dal form viene rimossa la classe "inactive" sia dai campi
+    // che dal form, riportando lo sfondo bianco, e la classe "focused" da tutti i campi.
+    // inoltre viene rimessa la classe "field-hover"
+    document.addEventListener("click", (e) => {
+      const target = e.target as Node;
+      if (!form.contains(target)) {
+        fields.forEach(f => {
+          f.classList.remove("inactive", "focused")
+          f.classList.add("field-hover")
+        })
+        form.classList.remove("inactive")
+        button.classList.remove("wide")
+      }
+    })
+  </script>
 </form>
 
 <style>
@@ -29,16 +69,33 @@ import SearchIcon from "../../public/search.svg"
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: var(--formBorderRadius);
     outline: solid 1px var(--textlightgraycolor);
     box-sizing: border-box;
     box-shadow: 2px 2px 10px 5px var(--grayhovercolor);
   }
-  .large-field {
-    width: var(--largeFieldW);
+  form.inactive, .field.inactive {
+    background-color: var(--bglighgraycolor);
+  }
+  .field {
+    border-radius: inherit;
+    background-color: #ffffff;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .field.focused {
+    box-shadow: 2px 0 2px 2px var(--grayhovercolor);
+    z-index: 5;
+  }
+  .field-hover:hover {
+    cursor: pointer;
+    background-color: var(--grayhovercolor);
+  }
+  .large-field {
+    width: var(--largeFieldW);
   }
   .small-field {
     width: var(--smallFieldW);
@@ -50,12 +107,34 @@ import SearchIcon from "../../public/search.svg"
   }
   button {
     background-color: var(--primarycolor);
+    flex-shrink: 0;
     width: 50px;
     height: 50px;
+    padding: 13px;
     margin: 0 12px;
-    border-radius: 50%;
+    border-radius: 25px;
     border: none;
-    color: #FFFFFF;
+    color: #ffffff;
+    transition: width 0.3s ease;
+    overflow: hidden;
+  }
+  button span.btn-label {
+    display: none;
+  }
+  button.wide {
+    width: 110px;
+    transition: width 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+  button.wide span.btn-label {
+    display: inline;
+    font-family: "Quicksand", sans-serif;
+    font-size: 1.2em;
+    font-weight: 600;
   }
   button:hover {
     filter: brightness(0.8);
