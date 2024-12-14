@@ -22,7 +22,11 @@ const { image, text } = Astro.props
     border-radius: 16px;
   }
   p {
+    width: 105px;
     font-size: 0.9em;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 </style>

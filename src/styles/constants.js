@@ -24,6 +24,7 @@ export const searchFormDimensions = {
   inputLineHeight: 20,
   paddingLabelV: 16,
   paddingLabelH: 24,
+  separatorW: 0.84,
   get formBorderRadius() {
     return (this.spanLineHeight + this.inputLineHeight + (this.paddingLabelV * 2)) / 2
   },
@@ -36,5 +37,22 @@ export const searchFormDimensions = {
   },
   get smallFieldTabletW() {
     return (this.smallFieldW - 15)
-  }
+  },
+  get formW() {
+    return (this.largeFieldW * 2) + (this.smallFieldW * 2) + (this.separatorW * 3)
+  },
+  get formTabletW() {
+    return (this.largeFieldTabletW * 2) + (this.smallFieldTabletW * 2) + (this.separatorW * 3)
+  },
+}
+
+export const searchFormFieldsData = [
+  {id: "destination", label: "Dove", placeholder: "Cerca destinazioni"},
+  {id: "check-in-date", label: "Check-in", placeholder: "Aggiungi date"},
+  {id: "check-out-date", label: "Check-out", placeholder: "Aggiungi date"},
+  {id: "guests", label: "Chi", placeholder: "Aggiungi ospiti"},
+]
+
+export const searchFormPickersDimensions = {
+  pickerBorderRadius: 32,
 }

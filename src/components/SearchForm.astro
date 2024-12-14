@@ -1,59 +1,35 @@
 ---
 import TextInputSearch from "./form-components/TextInputSearch.astro";
 import RegionPickerDesktop from "./form-components/RegionPickerDesktop.astro";
+import DatePickerDesktop from "./form-components/DatePickerDesktop.astro";
 
-import { searchFormDimensions, generateCSSConstants } from "../styles/constants";
+import { searchFormDimensions, generateCSSConstants, searchFormFieldsData as fieldsData } from "../styles/constants";
 
 import SearchIcon from "../../public/search.svg";
 ---
-
-<form style={generateCSSConstants(searchFormDimensions, "px")}>
-  <!-- Container -->
-  <div class="field-container">
-    <div id="destination" class="field field-hover large-field">
-      <TextInputSearch label="Dove" placeholder="Cerca destinazioni" />
-    </div>
-    <div id="region-picker-wrapper" class="wrapper hidden">
-      <RegionPickerDesktop />
-    </div>
-  </div>
-  <!-- Separatore -->
-  <div class="field-separator"></div>
-  <!-- Container -->
-  <div class="field-container">
-    <div id="check-in-date" class="field field-hover small-field">
-      <TextInputSearch label="Check-in" placeholder="Aggiungi date" />
-    </div>
-    <div id="date-picker-wrapper" class="wrapper hidden">
-      <!-- qui ci va il componente per la data -->
-    </div>
-  </div>
-  <!-- Separatore -->
-  <div class="field-separator"></div>
-  <!-- Container -->
-  <div id="check-out-date" class="field-container">
-    <div class="field field-hover small-field">
-      <TextInputSearch label="Check-out" placeholder="Aggiungi date" />
-    </div>
-    <div id="date-picker-wrapper" class="wrapper hidden">
-      <!-- qui ci va il componente per la data -->
-    </div>
-  </div>
-  <!-- Separatore -->
-  <div class="field-separator"></div>
-  <!-- Container -->
-  <div class="field-container">
-    <div id="guests" class="field field-hover large-field">
-      <TextInputSearch label="Chi" placeholder="Aggiungi ospiti" />
-      <button type="button" id="btn-submit"
-        ><SearchIcon width={24} height={24} />
-        <span class="btn-label">Cerca</span>
-      </button>
-    </div>
-    <div id="guests-picker-wrapper" class="wrapper hidden">
-      <!-- qui ci va il componente per gli ospiti -->
-    </div>
-  </div>
+<form id="one" style={generateCSSConstants(searchFormDimensions, "px")}>
+  {fieldsData.map((fieldData, idx) => (
+    <>
+      <div class="field-container">
+        <div id={fieldData.id} class={`field field-hover ${fieldData.id.includes("date") ? "small-field" : "large-field"}`}>
+          <TextInputSearch label={fieldData.label} placeholder={fieldData.placeholder} />
+          {fieldData.id === "guests" && (
+            <button type="button" id="btn-submit">
+              <SearchIcon width={24} height={24} />
+              <span class="btn-label">Cerca</span>
+            </button>
+          )}
+        </div>
+        <div id={`${fieldData.id}-picker-wrapper`} class="wrapper hidden">
+          {fieldData.id === "destination" && <RegionPickerDesktop />}
+          {fieldData.id.includes("date") && <DatePickerDesktop containerName={fieldData.label} />}
+          {fieldData.id === "guests" && <div>{/* Inserire qui il componente guests picker */}</div>}
+        </div>
+      </div>
+      {idx < 3 && <div class="field-separator"></div>}
+    </>
+  ))}
+</form>
 
   <script>
     // costanti per gli script sotto
@@ -61,8 +37,9 @@ import SearchIcon from "../../public/search.svg";
     const form = document.querySelector("form") as HTMLFormElement;
     const button = document.getElementById("btn-submit") as HTMLButtonElement;
     const wrappers = document.querySelectorAll(".wrapper")
-    const regionPicker = document.getElementById("region-picker-wrapper") as HTMLDivElement
-    // const datePicker = document.getElementById("date-picker-wrapper") as HTMLDivElement
+    const destinationPicker = document.getElementById("destination-picker-wrapper") as HTMLDivElement
+    const checkInDatePicker = document.getElementById("check-in-date-picker-wrapper") as HTMLDivElement
+    const checkOutDatePicker = document.getElementById("check-out-date-picker-wrapper") as HTMLDivElement
     // const guestsPicker = document.getElementById("guests-picker-wrapper") as HTMLDivElement
 
     // ad ogni campo del form aggiungo un event listener
@@ -82,9 +59,9 @@ import SearchIcon from "../../public/search.svg";
         field.classList.add("focused");
         button.classList.add("wide");
         // Visibilità opzioni al click del campo
-        if (field.id == "destination") regionPicker.classList.remove("hidden")
-        // if (field.id == "check-in-date") datePicker.classList.remove("hidden")
-        // if (field.id == "check-out-date") datePicker.classList.remove("hidden")
+        if (field.id == "destination") destinationPicker.classList.remove("hidden")
+        if (field.id == "check-in-date") checkInDatePicker.classList.remove("hidden")
+        if (field.id == "check-out-date") checkOutDatePicker.classList.remove("hidden")
         // if (field.id == "guests") guestsPicker.classList.remove("hidden")
       });
     });
@@ -122,6 +99,8 @@ import SearchIcon from "../../public/search.svg";
   }
   div.field-container {
     border-radius: inherit;
+    display: flex;
+    flex-direction: column;
   }
   form.inactive,
   .field.inactive {
@@ -150,8 +129,7 @@ import SearchIcon from "../../public/search.svg";
     width: var(--smallFieldW);
   }
   .field-separator {
-    background-color: var(--grayhovercolor);
-    width: 0.84px;
+    border-right: solid var(--separatorW) var(--grayhovercolor);
     height: var(--formBorderRadius);
   }
   button {
