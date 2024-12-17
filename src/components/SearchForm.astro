@@ -1,23 +1,41 @@
 ---
+// Components
 import TextInputSearch from "./form-components/TextInputSearch.astro";
 import RegionPickerDesktop from "./form-components/RegionPickerDesktop.astro";
 import DatePickerDesktop from "./form-components/DatePickerDesktop.astro";
-
-import { searchFormDimensions, generateCSSConstants, searchFormFieldsData as fieldsData } from "../styles/constants";
-
+import ReactButton from "./form-components/ReactButton.jsx";
+// Constants
+import { 
+  searchFormDimensions, 
+  generateCSSConstants, 
+  searchFormFieldsData as fieldsData,
+  research
+} from "../styles/constants";
+// Icons
 import SearchIcon from "../../public/search.svg";
+
+// Funzioni
+const updateResearch = () => {
+  const fieldsIds = fieldsData.forEach(f => {return f.id})
+  console.log(fieldsIds)
+}
 ---
-<form id="one" style={generateCSSConstants(searchFormDimensions, "px")}>
+<form style={generateCSSConstants(searchFormDimensions, "px")}>
   {fieldsData.map((fieldData, idx) => (
     <>
       <div class="field-container">
         <div id={fieldData.id} class={`field field-hover ${fieldData.id.includes("date") ? "small-field" : "large-field"}`}>
           <TextInputSearch label={fieldData.label} placeholder={fieldData.placeholder} />
           {fieldData.id === "guests" && (
-            <button type="button" id="btn-submit">
-              <SearchIcon width={24} height={24} />
-              <span class="btn-label">Cerca</span>
-            </button>
+            // <button type="button" id="btn-submit">
+            //   <SearchIcon width={24} height={24} />
+            //   <span class="btn-label">Cerca</span>
+            // </button>
+            <ReactButton
+              id="btn-submit"
+              label="Cerca"
+              clickHandler={updateResearch}
+            />
           )}
         </div>
         <div id={`${fieldData.id}-picker-wrapper`} class="wrapper hidden">
@@ -41,6 +59,7 @@ import SearchIcon from "../../public/search.svg";
     const checkInDatePicker = document.getElementById("check-in-date-picker-wrapper") as HTMLDivElement
     const checkOutDatePicker = document.getElementById("check-out-date-picker-wrapper") as HTMLDivElement
     // const guestsPicker = document.getElementById("guests-picker-wrapper") as HTMLDivElement
+    const btnSubmit = document.getElementById("btn-submit") as HTMLButtonElement
 
     // ad ogni campo del form aggiungo un event listener
     // al click tutti i campi non cliccati e il form, acquisiscono la classe "inactive" che cambia il colore di sfondo,
@@ -82,6 +101,11 @@ import SearchIcon from "../../public/search.svg";
         button.classList.remove("wide");
       }
     });
+
+    // Submit handler
+    btnSubmit.addEventListener("click", () => {
+   
+    })
   </script>
 </form>
 
