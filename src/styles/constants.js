@@ -56,12 +56,3 @@ export const searchFormFieldsData = [
 export const searchFormPickersDimensions = {
   pickerBorderRadius: 32,
 }
-
-export class research {
-  constructor(destination, checkInDate, checkOutDate, guests) {
-    this.destination = destination
-    this.checkInDate = checkInDate
-    this.checkOutDate = checkOutDate
-    this.guests = guests
-  }
-}

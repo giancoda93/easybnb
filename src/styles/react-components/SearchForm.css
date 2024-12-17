@@ -1,0 +1,52 @@
+@import url("../global.css");
+
+:root {
+  --spanLineHeight: 16px;
+  --inputLineHeight: 20px;
+  --paddingLabelV: 16px;
+  --paddingLabelH: 24px;
+  --separatorW: 0.84px;
+  --formBorderRadius: calc(var(--spanLineHeight) + var(--inputLineHeight) + (var(--paddingLabelV) * 2));
+  --largeFieldW: 282.5px;
+  --smallFieldW: calc(var(--largeFieldW) / 2);
+  --largeFieldTabletW: calc(var(--largeFieldW) - 30);
+  --smallFieldTabletW: calc(var(--smallFieldW) - 15);
+  --formW: calc((var(--largeFieldW) * 2) + (var(--smallFieldW) * 2) + (var(--separatorW) * 3));
+  --formTabletW: calc((var(--largeFieldTabletW) * 2) + (var(--smallFieldTabletW) * 2) + (var(--separatorW) * 3));
+  --pickerBorderRadius: 32px;
+}
+
+/* Text input field */
+.text-input {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--paddingLabelV) var(--paddingLabelH);
+  border-radius: var(--formBorderRadius);
+}
+
+.text-input:hover {
+  cursor: pointer;
+}
+
+.text-input-label {
+  font-size: 0.8em;
+  font-weight: 600;
+  line-height: var(--spanLineHeight);
+}
+
+.text-input-field {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.9em;
+  font-weight: normal;
+  line-height: var(--inputLineHeight);
+  background-color: inherit;
+}
+
+.text-input-field:focus {
+  outline-style: none;
+}
