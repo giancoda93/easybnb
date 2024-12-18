@@ -13,9 +13,9 @@ const regions = [
 
 // -----------------------------------------------------------------------------------------------------
 // Componente region card
-function RegionCard({ image, text }) {
+function RegionCard({ image, text, setDestination }) {
   return (
-    <div className="region-card">
+    <div className="region-card" onClick={() => setDestination(text)}>
       <img src={image} alt="img" />
       <p>{text}</p>
     </div>
@@ -23,7 +23,7 @@ function RegionCard({ image, text }) {
 }
 
 // Componente principale region picker
-export default function RegionPickerDesktop() {
+export default function RegionPickerDesktop({ setDestination }) {
   return (
     <div className="region-picker">
       <h2>Cerca per regione</h2>
@@ -33,6 +33,7 @@ export default function RegionPickerDesktop() {
             image={region.image}
             text={region.text}
             key={region.image}
+            setDestination={setDestination}
           />
         ))}
       </div>
