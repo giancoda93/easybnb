@@ -7,7 +7,7 @@
   --paddingLabelV: 16px;
   --paddingLabelH: 24px;
   --separatorW: 0.84px;
-  --formBorderRadius: calc(var(--spanLineHeight) + var(--inputLineHeight) + (var(--paddingLabelV) * 2));
+  --formBorderRadius: calc((var(--spanLineHeight) + var(--inputLineHeight) + var(--paddingLabelV) + var(--paddingLabelV)) / 2);
   --largeFieldW: 282.5px;
   --smallFieldW: calc(var(--largeFieldW) / 2);
   --largeFieldTabletW: calc(var(--largeFieldW) - 30px);
@@ -88,6 +88,10 @@ div.field-container {
 }
 #btn-submit span.btn-label {
   display: none;
+}
+#btn-submit img {
+  width: 24px;
+  height: 24px;
 }
 #btn-submit.wide {
   width: 110px;
