@@ -1,5 +1,6 @@
 @import url("../global.css");
 
+/* Constants */
 :root {
   --spanLineHeight: 16px;
   --inputLineHeight: 20px;
@@ -9,14 +10,110 @@
   --formBorderRadius: calc(var(--spanLineHeight) + var(--inputLineHeight) + (var(--paddingLabelV) * 2));
   --largeFieldW: 282.5px;
   --smallFieldW: calc(var(--largeFieldW) / 2);
-  --largeFieldTabletW: calc(var(--largeFieldW) - 30);
-  --smallFieldTabletW: calc(var(--smallFieldW) - 15);
+  --largeFieldTabletW: calc(var(--largeFieldW) - 30px);
+  --smallFieldTabletW: calc(var(--smallFieldW) - 15px);
   --formW: calc((var(--largeFieldW) * 2) + (var(--smallFieldW) * 2) + (var(--separatorW) * 3));
   --formTabletW: calc((var(--largeFieldTabletW) * 2) + (var(--smallFieldTabletW) * 2) + (var(--separatorW) * 3));
   --pickerBorderRadius: 32px;
 }
 
-/* Text input field */
+/* Search form styles */
+#search-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: var(--formBorderRadius);
+  outline: solid 1px var(--textlightgraycolor);
+  box-sizing: border-box;
+  box-shadow: 2px 2px 10px 5px var(--grayhovercolor);
+}
+
+div.field-container {
+  border-radius: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+#search-form.inactive,
+.field.inactive {
+  background-color: var(--bglighgraycolor);
+}
+
+.field {
+  border-radius: inherit;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.field.focused {
+  box-shadow: 2px 0 2px 2px var(--grayhovercolor);
+  z-index: 5;
+}
+
+.field-hover:hover {
+  cursor: pointer;
+  background-color: var(--grayhovercolor);
+}
+
+.large-field {
+  width: var(--largeFieldW);
+}
+
+.small-field {
+  width: var(--smallFieldW);
+}
+
+.field-separator {
+  border-right: solid var(--separatorW) var(--grayhovercolor);
+  height: var(--formBorderRadius);
+}
+
+#btn-submit {
+  background-color: var(--primarycolor);
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  padding: 13px;
+  margin: 0 12px;
+  border-radius: 25px;
+  border: none;
+  color: #ffffff;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+#btn-submit span.btn-label {
+  display: none;
+}
+#btn-submit.wide {
+  width: 110px;
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+#btn-submit.wide span.btn-label {
+  display: inline;
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+#btn-submit:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Text input field styles */
 .text-input {
   flex-grow: 1;
   min-width: 0;
@@ -49,4 +146,19 @@
 
 .text-input-field:focus {
   outline-style: none;
+}
+
+/* --------------------------------------------------------------- */
+@media screen and (max-width: 850px) {
+  .large-field {
+    width: var(--largeFieldTabletW);
+  }
+  .small-field {
+    width: var(--smallFieldTabletW);
+  }
+}
+@media screen and (max-width: 760px) {
+  #search-form {
+    display: none;
+  }
 }
