@@ -9,9 +9,7 @@ div.region-picker {
   width: calc(var(--formW) / 2);
   left: calc((100vw - var(--formW)) / 2);
 }
-div.region-picker.hidden {
-  display: none;
-}
+
 h2 {
   margin: 0 0 16px 8px;
 }
