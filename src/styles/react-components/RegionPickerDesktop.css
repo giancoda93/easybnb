@@ -34,7 +34,7 @@ img {
   height: 105px;
   border-radius: 16px;
 }
-p {
+div.region-card p {
   width: 105px;
   font-size: 0.9em;
   margin: 0;
