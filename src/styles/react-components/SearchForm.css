@@ -79,7 +79,7 @@ div.field-container {
   width: 50px;
   height: 50px;
   padding: 13px;
-  margin: 0 12px;
+  margin: 0 12px 0 0;
   border-radius: 25px;
   border: none;
   color: #ffffff;
@@ -113,17 +113,14 @@ div.field-container {
   cursor: pointer;
 }
 
-.hidden {
-  display: none;
-}
-
 /* Text input field styles */
 .text-input {
   flex-grow: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: var(--paddingLabelV) var(--paddingLabelH);
+  padding: var(--paddingLabelV) 0;
+  padding-left: var(--paddingLabelH);
   border-radius: var(--formBorderRadius);
 }
 
@@ -152,6 +149,29 @@ div.field-container {
   outline-style: none;
 }
 
+button.cancel-input {
+  background-color: inherit;
+  margin: 0 24px 0 0;
+  padding: 12px;
+  width: 12px;
+  height: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 14px;
+  border: none;
+}
+
+button.cancel-input:hover {
+  cursor: pointer;
+  background-color: var(--grayhovercolor);
+}
+
+button.cancel-input img {
+  width: 12px;
+  height: 12px;
+}
+
 /* --------------------------------------------------------------- */
 @media screen and (max-width: 850px) {
   .large-field {
@@ -165,4 +185,9 @@ div.field-container {
   #search-form {
     display: none;
   }
+}
+
+/* Classe per nascondere elementi */
+.hidden {
+  display: none;
 }

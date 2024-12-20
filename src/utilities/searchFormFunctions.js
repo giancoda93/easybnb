@@ -81,3 +81,35 @@ export const chooseChangeHandler = (fieldId, setDestination, setCheckInDate, set
       return (e) => console.log("Change handler non definito")
   }
 }
+
+// seglie quale stato associare ad un campo input
+export const chooseValue = (fieldId, destination, checkInDate, checkOutDate, guests) => {
+  switch (fieldId) {
+    case "destination":
+      return destination
+    case "checkInDate":
+      return checkInDate
+    case "checkOutDate" :
+      return checkOutDate
+    case "guests":
+      return guests
+    default:
+      return null
+  }
+}
+
+// sceglie quale funzione "setState" associare ad un campo input
+export const chooseSetValue = (fieldId, setDestination, setCheckInDate, setCheckOutDate, setGuests) => {
+  switch (fieldId) {
+    case "destination":
+      return setDestination
+    case "checkInDate":
+      return setCheckInDate
+    case "checkOutDate" :
+      return setCheckOutDate
+    case "guests":
+      return setGuests
+    default:
+      return null
+  }
+}

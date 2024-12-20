@@ -9,27 +9,41 @@ import "../styles/react-components/SearchForm.css"
 
 // Icone
 import SearchIcon from "/search.svg?url"
+import CloseIcon from "/close.svg?url"
 
 // Handlers e funzioni
-import { fieldFocusHandler, submitHandler, chooseChangeHandler } from "../utilities/searchFormFunctions.js"
+import { fieldFocusHandler, submitHandler, chooseChangeHandler, chooseValue, chooseSetValue } from "../utilities/searchFormFunctions.js"
 
 // Costanti
 import { searchFormFieldsData, fieldInitialState } from "../utilities/searchFormFunctions.js"
 
 // ------------------------------------------------------------------------------
 // Componente per input text
-function TextInput({ label, placeholder, changeHandler, value, setters }) {
+function TextInput({ label, placeholder, changeHandler, value, setValue, setters }) {
+  const [isFocused, setIsFocused] = useState(false)
+
   return (
-    <label className="text-input">
-      <span className="text-input-label">{label}</span>
-      <input 
-        className="text-input-field" 
-        type="text" placeholder={placeholder} 
-        onChange={changeHandler} 
-        value={value}
-        onFocus={(e) => fieldFocusHandler(e.target.parentElement.parentElement.id, ...setters)}
-      />
-    </label>
+    <>
+      <label className="text-input">
+        <span className="text-input-label">{label}</span>
+        <input 
+          className="text-input-field" 
+          type="text" placeholder={placeholder} 
+          onChange={changeHandler} 
+          value={value}
+          onFocus={(e) => {
+            fieldFocusHandler(e.target.parentElement.parentElement.id, ...setters)
+            setIsFocused(true)
+          }}
+          onBlur={() => setIsFocused(false)}
+        />
+      </label>
+      {value && 
+        <button type="button" className="cancel-input" onClick={() => setValue("")}>
+          <img src={CloseIcon} alt="Cancel input icon" />
+        </button>
+      }
+    </>
   )
 }
 
@@ -82,7 +96,7 @@ export default function SearchForm() {
         setIsFormActive(true)
       }
     }
-
+  
     // Aggiungi event listener per il click
     document.addEventListener("click", globalClickHandler)
 
@@ -105,15 +119,12 @@ export default function SearchForm() {
               className={`field ${fieldData.id.includes("Date") ? "small-field" : "large-field"} ${fieldsStates[`${fieldData.id}`].hover ? "field-hover" : ""} ${fieldsStates[`${fieldData.id}`].isActive ? "" : "inactive"} ${fieldsStates[`${fieldData.id}`].isFocused ? "focused" : ""}`}
             >
               <TextInput
+                fieldId={fieldData.id}
                 label={fieldData.label}
                 placeholder={fieldData.placeholder}
                 changeHandler={chooseChangeHandler(fieldData.id, setDestination, setCheckInDate, setCheckOutDate, setGuests)}
-                value={
-                  fieldData.id === "destination" ? destination :
-                  fieldData.id === "checkInDate" ? checkInDate :
-                  fieldData.id === "checkOutDate" ? checkOutDate :
-                  fieldData.id === "guests" ? guests : null
-                }
+                value={chooseValue(fieldData.id, destination, checkInDate, checkOutDate, guests)}
+                setValue={chooseSetValue(fieldData.id, setDestination, setCheckInDate, setCheckOutDate, setGuests)}
                 setters={[setFieldsStates, setIsButtonWide, setIsFormActive, setPickersVisibility]}
               />
               {fieldData.id === "guests" && (
