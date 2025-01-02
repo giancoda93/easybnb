@@ -1,19 +1,11 @@
-import { eachDayOfInterval, format } from 'date-fns'
+import { eachDayOfInterval, format, isBefore } from 'date-fns'
 import { useEffect, useState } from 'react'
 
 // Styles
 import "../../styles/react-components/DatePickerDesktop.css"
 
 // Costanti
-const dayName = [
-  [0, "Domenica"],
-  [1, "Lunedì"],
-  [2, "Martedì"],
-  [3, "Mercoledì"],
-  [4, "Giovedì"],
-  [5, "Venerdì"],
-  [6, "Sabato"],
-]
+import { dayName, monthName } from '../../utilities/searchFormFunctions'
 const today = dayToObject(new Date())
 
 // Funzioni
@@ -55,6 +47,15 @@ function getMonthGrid(month) {
   return monthGrid
 }
 
+function isDateObjBefore(dateObj1, dateObj2) {
+  // converte gli oggetti data custom in date classiche e li confronta
+  // restituendo true se il primo argomento data è precedente al
+  // secondo argomento data
+  const date1 = new Date(dateObj1.year, dateObj1.month - 1, dateObj1.day)
+  const date2 = new Date(dateObj2.year, dateObj2.month - 1, dateObj2.day)
+
+  return isBefore(date1, date2)
+}
 
 
 export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, setCheckInDate, setCheckOutDate }) {
@@ -63,28 +64,72 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
   const [firstMonthCalendar, setFirstMonthCalendar] = useState(generateMonth(firstMonth.y, firstMonth.m))
   const [secondMonthCalendar, setSecondMonthCalendar] = useState(generateMonth(secondMonth.y, secondMonth.m))
 
+  function chooseClickHandler(date, isBefore) {
+    if (!isBefore) {
+      if (fieldId == "checkInDate") {
+        return () => setCheckInDate(`${date.day}-${date.month}-${date.year}`)
+      }
+      if (fieldId == "checkOutDate") {
+        return () => setCheckOutDate(`${date.day}-${date.month}-${date.year}`)
+      }
+    }
+  }
+
   useEffect(() => {
-    const show = getMonthGrid(firstMonthCalendar)    
-    console.log(show)
-  }, [firstMonthCalendar])
+    
+  }, [checkInDate, checkOutDate])
 
   return (
     <div className="date-picker">
       <h2>Scegli la data di {fieldId == "checkInDate" ? "Check-in" : "Check-out"}</h2>
       <div className="calendar">
-        <div id='first-month' className='month'>
-          {getMonthGrid(firstMonthCalendar).map((d, idx) => (
-            <div key={idx} className="day">
-              {d ? d.day : ""}
+        <div className="month-container">
+          <div className="month-header">
+            <h3>{monthName[firstMonth.m - 1]}</h3>
+            <div className="weekdays">
+              {dayName.map( day => {
+                if (day[0] != 0) {
+                  return <div className="weekday" key={day[0]}>{day[1].slice(0, 3)}</div>
+                }
+              })}
+              <div className="weekday">{dayName[0][1].slice(0, 3)}</div>
             </div>
-          ))}
+          </div>
+          <div id='first-month' className='month'>
+            {getMonthGrid(firstMonthCalendar).map((d, idx) => (
+              <div 
+                key={idx} 
+                className={`day ${isDateObjBefore(d, today) ? "day-before" : "day-after"}`}
+                onClick={chooseClickHandler(d, isDateObjBefore(d, today))}
+              >
+                {d ? d.day : ""}
+              </div>
+            ))}
+          </div>
         </div>
-        <div id='second-month' className='month'>
-          {getMonthGrid(secondMonthCalendar).map((d, idx) => (
-            <div key={idx} className="day">
-              {d ? d.day : ""}
+        <div className="month-container">
+        <div className="month-header">
+            <h3>{monthName[secondMonth.m - 1]}</h3>
+            <div className="weekdays">
+              {dayName.map( day => {
+                if (day[0] != 0) {
+                  return <div className="weekday" key={day[0]}>{day[1].slice(0, 3)}</div>
+                }
+              })}
+              <div className="weekday">{dayName[0][1].slice(0, 3)}</div>
             </div>
-          ))}
+          </div>
+          <div id='second-month' className='month'>
+            {getMonthGrid(secondMonthCalendar).map((d, idx) => (
+              <div 
+                key={idx} 
+                className={`day ${isDateObjBefore(d, today) ? "day-before" : "day-after"}`}
+                onClick={chooseClickHandler(d, isDateObjBefore(d, today))}
+              >
+                {d ? d.day : ""}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

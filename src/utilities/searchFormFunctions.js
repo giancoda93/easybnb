@@ -15,6 +15,33 @@ export const fieldInitialState = {
   isFocused: false,
 }
 
+// conversione da numero a nome del giorno della settimana
+export const dayName = [
+  [0, "Domenica"],
+  [1, "Lunedì"],
+  [2, "Martedì"],
+  [3, "Mercoledì"],
+  [4, "Giovedì"],
+  [5, "Venerdì"],
+  [6, "Sabato"],
+]
+
+// conversione da numero a nome del mese
+export const monthName = [
+  "Gennaio",
+  "Febbraio",
+  "Marzo",
+  "Aprile",
+  "Maggio",
+  "Giugno",
+  "Luglio",
+  "Agosto",
+  "Settembre",
+  "Ottobre",
+  "Novembre",
+  "Dicembre",
+]
+
 // HANDLERS
 
 // gestisce le classi di stile per i componenti del form quando un input è in focus
