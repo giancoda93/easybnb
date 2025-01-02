@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react'
 // Styles
 import "../../styles/react-components/DatePickerDesktop.css"
 
+// Icone
+import ChevronLeft from "/chevron-left.svg?url"
+import ChevronRight from "/chevron-right.svg?url"
+
 // Costanti
 import { dayName, monthName } from '../../utilities/searchFormFunctions'
 const today = dayToObject(new Date())
@@ -75,14 +79,47 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
     }
   }
 
+  function nextMonth() {
+    setFirstMonth( prev => {
+      let next = {m: prev.m + 1, y: prev.y}
+      return next
+    })
+    setSecondMonth( prev => {
+      let next = {m: prev.m + 1, y: prev.y}
+      return next
+    })
+  }
+  function prevMonth() {
+    if (today.month == firstMonth.m) {
+      return
+    }
+    setFirstMonth( prev => {
+      let next = {m: prev.m - 1, y: prev.y}
+      return next
+    })
+    setSecondMonth( prev => {
+      let next = {m: prev.m - 1, y: prev.y}
+      return next
+    })
+  }
+
   useEffect(() => {
-    
-  }, [checkInDate, checkOutDate])
+    setFirstMonthCalendar(() => generateMonth(firstMonth.y, firstMonth.m))
+    setSecondMonthCalendar(() => generateMonth(secondMonth.y, secondMonth.m))
+  }, [firstMonth, secondMonth])
 
   return (
     <div className="date-picker">
       <h2>Scegli la data di {fieldId == "checkInDate" ? "Check-in" : "Check-out"}</h2>
       <div className="calendar">
+        {/* Freccia per mese precedente */}
+        <div 
+          className={`arrow ${today.month == firstMonth.m ? "disabled" : "active"}`}
+          onClick={() => prevMonth()}
+        >
+          <img src={ChevronLeft} alt="previous month" />
+        </div>
+        {/* Contenitore primo mese */}
         <div className="month-container">
           <div className="month-header">
             <h3>{monthName[firstMonth.m - 1]}</h3>
@@ -99,7 +136,7 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
             {getMonthGrid(firstMonthCalendar).map((d, idx) => (
               <div 
                 key={idx} 
-                className={`day ${isDateObjBefore(d, today) ? "day-before" : "day-after"}`}
+                className={`day ${!d ? "day-before" : isDateObjBefore(d, today) ? "day-before" : "day-after"}`}
                 onClick={chooseClickHandler(d, isDateObjBefore(d, today))}
               >
                 {d ? d.day : ""}
@@ -107,8 +144,9 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
             ))}
           </div>
         </div>
+        {/* Contenitore secondo mese */}
         <div className="month-container">
-        <div className="month-header">
+          <div className="month-header">
             <h3>{monthName[secondMonth.m - 1]}</h3>
             <div className="weekdays">
               {dayName.map( day => {
@@ -123,13 +161,20 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
             {getMonthGrid(secondMonthCalendar).map((d, idx) => (
               <div 
                 key={idx} 
-                className={`day ${isDateObjBefore(d, today) ? "day-before" : "day-after"}`}
+                className={`day ${!d ? "day-before" : isDateObjBefore(d, today) ? "day-before" : "day-after"}`}
                 onClick={chooseClickHandler(d, isDateObjBefore(d, today))}
               >
                 {d ? d.day : ""}
               </div>
             ))}
           </div>
+        </div>
+        {/* Freccia per mese successivo */}
+        <div 
+          className='arrow active'
+          onClick={() => nextMonth()}
+        >
+          <img src={ChevronRight} alt="next month" />
         </div>
       </div>
     </div>

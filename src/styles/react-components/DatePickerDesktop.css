@@ -17,6 +17,21 @@ h3 {
   margin: 0;
   padding-bottom: 16px;
 }
+div.arrow {
+  padding-top: 16px;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+div.arrow.disabled img {
+  /* L'immagine svg non si colora di grigio quando è disabled */
+  color: var(--grayhovercolor);
+}
+div.arrow.active:hover {
+  cursor: pointer;
+}
 div.calendar {
   margin-top: 16px;
   display: flex;
@@ -65,7 +80,7 @@ div.day-before {
   color: var(--grayhovercolor);
 }
 div.day-after:hover {
-  background-color: var(--grayhovercolor);
+  border: solid 1px black;
   cursor: pointer;
 }
 
