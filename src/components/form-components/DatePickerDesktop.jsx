@@ -61,6 +61,24 @@ function isDateObjBefore(dateObj1, dateObj2) {
   return isBefore(date1, date2)
 }
 
+function chooseDayClass(date, today, checkInDate, checkOutDate) {
+  let classString = "day"
+  
+  classString += !date ? " day-before" : isDateObjBefore(date, today) ? " day-before" : " day-after"
+  classString += `${date.day}-${date.month}-${date.year}` == checkInDate ? " selected check-in" : ""
+  classString += `${date.day}-${date.month}-${date.year}` == checkOutDate ? " selected check-out" : ""
+  if (checkInDate, checkOutDate) {
+    let checkInDateTemp = new Date(checkInDate.split("-")[2], checkInDate.split("-")[1] - 1, checkInDate.split("-")[0])
+    let checkInDateObj = dayToObject(checkInDateTemp)
+    let checkOutDateTemp = new Date(checkOutDate.split("-")[2], checkOutDate.split("-")[1] - 1, checkOutDate.split("-")[0])
+    let checkOutDateObj = dayToObject(checkOutDateTemp)
+    if (`${date.day}-${date.month}-${date.year}` != checkInDate) {
+      classString += (!isDateObjBefore(date, checkInDateObj) && isDateObjBefore(date, checkOutDateObj)) ? " interval" : ""
+    }
+  }
+  return classString
+}
+
 
 export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, setCheckInDate, setCheckOutDate }) {
   const [firstMonth, setFirstMonth] = useState({m: today.month, y: today.year})
@@ -79,6 +97,7 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
     }
   }
 
+  // Passa al mese successivo
   function nextMonth() {
     setFirstMonth( prev => {
       let next = {m: prev.m + 1, y: prev.y}
@@ -89,6 +108,8 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
       return next
     })
   }
+
+  // Torna al mese precedente, a meno che non sia il mese corrente
   function prevMonth() {
     if (today.month == firstMonth.m) {
       return
@@ -104,9 +125,10 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
   }
 
   useEffect(() => {
+    // Quando cambia il mese selezionato viene rigenerata la griglia dei giorni
     setFirstMonthCalendar(() => generateMonth(firstMonth.y, firstMonth.m))
     setSecondMonthCalendar(() => generateMonth(secondMonth.y, secondMonth.m))
-  }, [firstMonth, secondMonth])
+  }, [firstMonth, secondMonth, checkInDate, checkOutDate])
 
   return (
     <div className="date-picker">
@@ -136,7 +158,7 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
             {getMonthGrid(firstMonthCalendar).map((d, idx) => (
               <div 
                 key={idx} 
-                className={`day ${!d ? "day-before" : isDateObjBefore(d, today) ? "day-before" : "day-after"}`}
+                className={chooseDayClass(d, today, checkInDate, checkOutDate)}
                 onClick={chooseClickHandler(d, isDateObjBefore(d, today))}
               >
                 {d ? d.day : ""}
@@ -161,7 +183,7 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
             {getMonthGrid(secondMonthCalendar).map((d, idx) => (
               <div 
                 key={idx} 
-                className={`day ${!d ? "day-before" : isDateObjBefore(d, today) ? "day-before" : "day-after"}`}
+                className={chooseDayClass(d, today, checkInDate, checkOutDate)}
                 onClick={chooseClickHandler(d, isDateObjBefore(d, today))}
               >
                 {d ? d.day : ""}

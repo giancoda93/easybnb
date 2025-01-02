@@ -67,6 +67,10 @@ div.month {
   grid-template-rows: repeat(6, 1fr);
   padding: 16px;
 }
+div.day.interval {
+  box-shadow: inset 0 0 15px 0 var(--grayhovercolor);
+}
+
 div.day {
   width: 46px;
   height: 46px;
@@ -75,6 +79,10 @@ div.day {
   align-items: center;
   border-radius: 23px;
   font-weight: 600;
+}
+div.day.selected {
+  background-color: black;
+  color: #FFFFFF;
 }
 div.day-before {
   color: var(--grayhovercolor);
