@@ -1,67 +1,26 @@
-import { eachDayOfInterval, format, isBefore } from 'date-fns'
-import { useEffect, useState } from 'react'
+// IMPORT
 
+import { useEffect, useState } from 'react'
 // Styles
 import "../../styles/react-components/DatePickerDesktop.css"
-
 // Icone
 import ChevronLeft from "/chevron-left.svg?url"
 import ChevronRight from "/chevron-right.svg?url"
-
-// Costanti
+// Costanti esterne
 import { dayName, monthName } from '../../utilities/searchFormFunctions'
+// Funzioni esterne
+import { dayToObject, generateMonth, getMonthGrid, isDateObjBefore } from '../../utilities/searchFormFunctions'
+
+// ------------------------------------------------------------------------------------
+
+// Costanti locali
+
 const today = dayToObject(new Date())
 
-// Funzioni
-function generateMonth(year, month) {
-  // genera un calendario, sotto forma di array, di due anni a partire dal mese corrente.
-  // ogni elemento dell'array è un oggetto contenente anno, mese, giorno, e nome del giorno
-  const start = new Date(year, month - 1, 1)
-  const end = new Date(year, month, 0)
-
-  return eachDayOfInterval({ start, end }).map(date => dayToObject(date))
-}
-
-function dayToObject(date) {
-  // converte una data in un oggetto con il formato: { year: yyyy, month: mm, day: d }
-  return {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1, // Mesi indicizzati da 0
-    day: date.getDate(),
-    weekDay: {
-      name: dayName[date.getDay()][1],
-      num: date.getDay(),
-    }
-  }
-}
-
-function getMonthGrid(month) {
-  // restituisce un array di 42 elementi posizionando i giorni del mese
-  // in base al giorno della settimana
-  const monthGrid = [...month]
-  
-  const firstDay = month[0].weekDay.num
-  const lastDay = month[month.length - 1].weekDay.num
-  const numDaysBefore = firstDay == 0 ? 6 : (firstDay - 1)
-  const numDaysAfter = lastDay == 0 ? 0 : (7 - lastDay)
-
-  for(let i = 0; i < numDaysBefore; i++) monthGrid.unshift("")
-  for(let i = 0; i < numDaysAfter; i++) monthGrid.push("")
-
-  return monthGrid
-}
-
-function isDateObjBefore(dateObj1, dateObj2) {
-  // converte gli oggetti data custom in date classiche e li confronta
-  // restituendo true se il primo argomento data è precedente al
-  // secondo argomento data
-  const date1 = new Date(dateObj1.year, dateObj1.month - 1, dateObj1.day)
-  const date2 = new Date(dateObj2.year, dateObj2.month - 1, dateObj2.day)
-
-  return isBefore(date1, date2)
-}
+// Funzioni locali
 
 function chooseDayClass(date, today, checkInDate, checkOutDate) {
+  // definisce la classe css da assegnare ad ogni elemento "day" del calendario generato
   let classString = "day"
   
   classString += !date ? " day-before" : isDateObjBefore(date, today) ? " day-before" : " day-after"
@@ -79,7 +38,7 @@ function chooseDayClass(date, today, checkInDate, checkOutDate) {
   return classString
 }
 
-
+// Funzione principale del componente generato
 export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, setCheckInDate, setCheckOutDate }) {
   const [firstMonth, setFirstMonth] = useState({m: today.month, y: today.year})
   const [secondMonth, setSecondMonth] = useState({m: today.month + 1, y: today.year})
@@ -130,6 +89,7 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
     setSecondMonthCalendar(() => generateMonth(secondMonth.y, secondMonth.m))
   }, [firstMonth, secondMonth, checkInDate, checkOutDate])
 
+  // componente generato
   return (
     <div className="date-picker">
       <h2>Scegli la data di {fieldId == "checkInDate" ? "Check-in" : "Check-out"}</h2>

@@ -13,7 +13,7 @@ import "../styles/react-components/SearchForm.css"
 import SearchIcon from "/search.svg?url"
 
 // Handlers e funzioni
-import { submitHandler, chooseChangeHandler, chooseValue, chooseSetValue } from "../utilities/searchFormFunctions.js"
+import { submitHandler, chooseChangeHandler, chooseValue, chooseSetValue, stringToDate } from "../utilities/searchFormFunctions.js"
 
 // Costanti
 import { searchFormFieldsData, fieldInitialState } from "../utilities/searchFormFunctions.js"
@@ -77,6 +77,11 @@ export default function SearchForm() {
     // Rimuovi event listener al cleanup
     return () => document.removeEventListener("click", globalClickHandler)
   }, [])
+
+  // Gestione passaggio al campo successivo all'inserimento di un valore in quello precedente
+  useEffect(() => {
+    
+  }, [destination, checkInDate, checkOutDate, guests])
 
   return (
     <form 
