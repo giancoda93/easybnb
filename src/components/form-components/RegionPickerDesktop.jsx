@@ -6,7 +6,6 @@ import LocationIcon from "/location.svg?url"
 
 // Styles
 import "../../styles/react-components/RegionPickerDesktop.css"
-import { useEffect } from "react"
 
 // Costanti
 const regions = [

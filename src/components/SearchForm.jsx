@@ -6,6 +6,7 @@ import { Country, City } from "country-state-city"
 import SearchFormTextInput from "./form-components/SearchFormTextInput.jsx"
 import RegionPickerDesktop from "./form-components/RegionPickerDesktop.jsx"
 import DatePickerDesktop from "./form-components/DatePickerDesktop.jsx"
+import GuestsPickerDesktop from "./form-components/GuestsPickerDesktop.jsx"
 
 // Styles
 import "../styles/react-components/SearchForm.css"
@@ -121,7 +122,7 @@ export default function SearchForm() {
                   setCheckOutDate={setCheckOutDate}
                 />
                 )}
-              {fieldData.id === "guests" && <div>{/* Inserire qui il componente guests picker */}</div>}
+              {fieldData.id === "guests" && <GuestsPickerDesktop />}
             </div>
           </div>
           {idx < 3 && <div className="field-separator"></div> }
