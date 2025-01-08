@@ -1,5 +1,6 @@
 // Import principali
 import React, { useState, useEffect, useRef } from "react"
+import { Country, City } from "country-state-city"
 
 // Componenti
 import SearchFormTextInput from "./form-components/SearchFormTextInput.jsx"
@@ -13,7 +14,7 @@ import "../styles/react-components/SearchForm.css"
 import SearchIcon from "/search.svg?url"
 
 // Handlers e funzioni
-import { submitHandler, chooseChangeHandler, chooseValue, chooseSetValue, stringToDate } from "../utilities/searchFormFunctions.js"
+import { submitHandler, chooseChangeHandler, chooseValue, chooseSetValue, stringToDate, chooseInputHandler } from "../utilities/searchFormFunctions.js"
 
 // Costanti
 import { searchFormFieldsData, fieldInitialState } from "../utilities/searchFormFunctions.js"
@@ -78,11 +79,6 @@ export default function SearchForm() {
     return () => document.removeEventListener("click", globalClickHandler)
   }, [])
 
-  // Gestione passaggio al campo successivo all'inserimento di un valore in quello precedente
-  useEffect(() => {
-    
-  }, [destination, checkInDate, checkOutDate, guests])
-
   return (
     <form 
       id="search-form" 
@@ -102,6 +98,7 @@ export default function SearchForm() {
                 label={fieldData.label}
                 placeholder={fieldData.placeholder}
                 changeHandler={chooseChangeHandler(fieldData.id, setDestination, setCheckInDate, setCheckOutDate, setGuests)}
+                inputHandler={chooseInputHandler(fieldData.id)}
                 value={chooseValue(fieldData.id, destination, checkInDate, checkOutDate, guests)}
                 setValue={chooseSetValue(fieldData.id, setDestination, setCheckInDate, setCheckOutDate, setGuests)}
                 setters={[setFieldsStates, setIsButtonWide, setIsFormActive, setPickersVisibility]}
@@ -114,7 +111,7 @@ export default function SearchForm() {
               )}
             </div>
             <div id={`${fieldData.id}-picker-wrapper`} className={`wrapper ${pickersVisibility[fieldData.id] ? "" : "hidden"}`}>
-              {fieldData.id === "destination" && <RegionPickerDesktop setDestination={setDestination} />}
+              {fieldData.id === "destination" && <RegionPickerDesktop destination={destination} setDestination={setDestination} />}
               {fieldData.id.includes("Date") && (
                 <DatePickerDesktop
                   fieldId={fieldData.id}

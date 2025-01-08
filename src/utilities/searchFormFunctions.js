@@ -1,6 +1,8 @@
 // IMPORT
 import { eachDayOfInterval, isBefore } from 'date-fns'
+import { Country, City } from "country-state-city";
 
+// -----------------------------------------------------------------------------------------------------------------
 // COSTANTI
 
 // dati per costruire i campi del form
@@ -45,6 +47,7 @@ export const monthName = [
   "Dicembre",
 ]
 
+// -----------------------------------------------------------------------------------------------------------------
 // HANDLERS
 
 // gestisce le classi di stile per i componenti del form quando un input è in focus
@@ -94,6 +97,7 @@ export const submitHandler = (e, destination, checkInDate, checkOutDate, guests)
   console.log(destination, checkInDate, checkOutDate, guests)
 }
 
+// -----------------------------------------------------------------------------------------------------------------
 // FUNZIONI
 
 // sceglie quale funzione click handler assegnare ad ogni campo del form
@@ -112,7 +116,22 @@ export const chooseChangeHandler = (fieldId, setDestination, setCheckInDate, set
   }
 }
 
-// seglie quale stato associare ad un campo input
+// sceglie come gestire il passaggio del focus all'elemento successivo del form
+// TODO: funziona ma non quando viene cliccato un giorno dal calendario. DA SISTEMARE
+export const chooseInputHandler = (fieldId) => {
+  switch (fieldId) {
+    case searchFormFieldsData[0].id:
+      return (e) => {
+        if (e.target.value.length > 5) document.getElementById(`${searchFormFieldsData[1].id}-input`).focus()
+      }
+    case searchFormFieldsData[1].id:
+      return (e) => {
+        if ((/\d{1,2}-\d{1,2}-\d{4}/).test(e.target.value)) document.getElementById(`${searchFormFieldsData[2].id}-input`).focus()
+      }
+  }
+}
+
+// sceglie quale stato associare ad un campo input
 export const chooseValue = (fieldId, destination, checkInDate, checkOutDate, guests) => {
   switch (fieldId) {
     case "destination":
@@ -198,4 +217,15 @@ export function stringToDate(string) {
   const dateArray = string.split("-")
 
   return new Date(dateArray[2], dateArray[1] - 1, dateArray[0])
+}
+
+
+// filtra le città mostrate nella ricerca in base alla stringa inserita nell'input
+export function filteredCities(input) {
+  const matchedCities = City.getAllCities().filter(city => {
+    if (city.name.slice(0, input.length).toLowerCase() == input.toLowerCase()) {
+      return city
+    }
+  })
+  return matchedCities.sort((a, b) => a.name.localeCompare(b.name)).slice(0, 10)
 }
