@@ -22,7 +22,7 @@ const regions = [
 function RegionCard({ image, text, setDestination }) {
   return (
     <div className="region-card" onClick={() => setDestination(text)}>
-      <img src={image} alt="img" />
+      <img className="card-img" src={image} alt="img" />
       <p>{text}</p>
     </div>
   )

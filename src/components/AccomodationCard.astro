@@ -1,0 +1,58 @@
+---
+const { image, name, city, country, rating, price } = Astro.props
+---
+<div class="accomodation-card">
+  <div class="card-container">
+    <img class="photo" src={image} alt="main photo">
+    <div class="title">
+      <span class="name">{name}</span>
+      <span class="rating">★ {rating}</span>
+    </div>
+    <span class="location">{city}, {country}</span>
+    <span class="price"><strong>{price} €</strong> notte</span>
+  </div>
+</div>
+
+<style>
+  div.accomodation-card {
+    border-radius: 24px;
+  }
+  div.accomodation-card:hover {
+    cursor: pointer;
+    box-shadow: 5px 0 5px 0 var(--grayhovercolor);
+  }
+
+  div.card-container {
+    display: flex;
+    flex-direction: column;
+    margin: 8px;
+  }
+
+  img.photo {
+    width: 100%;
+    height: 250px;
+    border-radius: 24px;
+    object-fit: cover;
+  }
+
+  div.title {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    & .name {
+      font-weight: 700;
+      font-size: 1.1em;
+    }
+
+    & .rating {
+      font-size: 1.1em;
+    }
+  }
+
+  span.location {
+    margin-bottom: 6px;
+  }
+</style>

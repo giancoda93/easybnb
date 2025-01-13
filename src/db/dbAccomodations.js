@@ -4,11 +4,10 @@ import { collection, query, where, getDocs } from "firebase/firestore"
 
 const accomodationsRef = collection(db, "accomodations")
 
-// estrae tutti gli alloggi in base al paese inserito
-export async function getAccomodationsByCountry(country) {
+// estrae tutti gli alloggi in base alla query inserita
+export async function getAccomodations(country) {
   let accomodationsArray = []
 
-  // query che filtra per paese
   const q = query(accomodationsRef, where("country", "==", country))
 
   // snapshot per la query inserita
@@ -23,4 +22,19 @@ export async function getAccomodationsByCountry(country) {
   })
 
   return accomodationsArray
+}
+
+
+// estrae gli alloggi disponibili in base al paese
+export async function getAccomodationsByCountry(country) {
+  let response = null
+
+  try {
+    response = await getAccomodations(country)
+  } catch (err) {
+    console.error("Errore nel caricamento dei documenti", err)
+    response = "Not found"
+  }
+
+  return response
 }

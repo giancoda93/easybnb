@@ -19,9 +19,6 @@ import { submitHandler, chooseChangeHandler, chooseValue, chooseSetValue, string
 // Costanti
 import { searchFormFieldsData, fieldInitialState } from "../utilities/searchFormFunctions.js"
 
-// Database
-import { getAccomodationsByCountry } from "../db/getAccomodations.js"
-
 // ------------------------------------------------------------------------------
 // Componente form
 export default function SearchForm() {

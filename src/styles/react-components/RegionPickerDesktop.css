@@ -71,7 +71,7 @@ div.region-card:hover {
   cursor: pointer;
   background-color: var(--grayhovercolor);
 }
-img {
+img.card-img {
   box-sizing: border-box;
   width: 105px;
   height: 105px;

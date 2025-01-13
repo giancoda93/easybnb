@@ -1,0 +1,61 @@
+---
+// Componenti
+import AccomodationCard from "./AccomodationCard.astro"
+
+// import database
+import { getAccomodationsByCountry } from "../db/dbAccomodations.js"
+
+// Funzioni
+function average(array: number[]) {
+  let sum = 0
+  array.forEach(e => {
+    sum += e
+  });
+  return sum / array.length
+}
+
+// Recupera dati lato server
+const country = "Argentina"
+
+interface Accomodation {
+  id: string;
+  name: string;
+  pricePerNight: number;
+  images: string[];
+  ratings: number[];
+  city: string;
+  country: string;
+}
+
+let accomodations= await getAccomodationsByCountry(country) as Accomodation[]
+---
+<div id="accomodations">
+  {accomodations && accomodations.map(acc => (
+    <AccomodationCard
+      image={`/accomodations/${acc.images[0]}`}
+      name={acc.name}
+      rating={average(acc.ratings)}
+      price={acc.pricePerNight}
+      city={acc.city}
+      country={acc.country}
+    />
+  ))}
+</div>
+
+<style>
+  div#accomodations {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 24px;
+    gap: 16px;
+  }
+</style>
+
+<!-- <script>
+  // import database
+  import { getAccomodationsByCountry } from "../db/dbAccomodations.js"
+
+  // Recupera dati lato server
+  let accomodations = await getAccomodationsByCountry("Argentina")
+  console.log(accomodations)
+</script> -->
