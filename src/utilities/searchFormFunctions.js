@@ -47,6 +47,14 @@ export const monthName = [
   "Dicembre",
 ]
 
+// opzioni per selezione ospiti
+export const guestOptions = [
+  { title: "Adulti", description: "Da 13 anni in su", state: "adults" },
+  { title: "Bambini", description: "Da 2 a 12 anni", state: "children" },
+  { title: "Neonati", description: "Fino a 2 anni", state: "infants" },
+  { title: "Animali domestici", description: "Animali di servizio in viaggio?", state: "pets" },
+]
+
 // -----------------------------------------------------------------------------------------------------------------
 // HANDLERS
 

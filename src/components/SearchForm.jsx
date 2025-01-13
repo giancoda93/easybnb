@@ -1,6 +1,5 @@
 // Import principali
 import React, { useState, useEffect, useRef } from "react"
-import { Country, City } from "country-state-city"
 
 // Componenti
 import SearchFormTextInput from "./form-components/SearchFormTextInput.jsx"
@@ -19,6 +18,9 @@ import { submitHandler, chooseChangeHandler, chooseValue, chooseSetValue, string
 
 // Costanti
 import { searchFormFieldsData, fieldInitialState } from "../utilities/searchFormFunctions.js"
+
+// Database
+import { getAccomodationsByCountry } from "../db/getAccomodations.js"
 
 // ------------------------------------------------------------------------------
 // Componente form
@@ -45,6 +47,9 @@ export default function SearchForm() {
   const [checkInDate, setCheckInDate] = useState("")
   const [checkOutDate, setCheckOutDate] = useState("")
   const [guests, setGuests] = useState("")
+
+  // stato per risultati ricerca
+  const [result, setResult] = useState([])
 
   // Ref
   const formRef = useRef(null)
@@ -79,6 +84,20 @@ export default function SearchForm() {
     // Rimuovi event listener al cleanup
     return () => document.removeEventListener("click", globalClickHandler)
   }, [])
+
+  function handleClickDb(country) {
+    let accomodations = []
+    getAccomodationsByCountry(country)
+      .then(res => {
+        accomodations.push(...res)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    
+      setResult(...accomodations)
+      // console.log(accomodations)
+  }
 
   return (
     <form 
@@ -115,6 +134,7 @@ export default function SearchForm() {
               {fieldData.id === "destination" && <RegionPickerDesktop destination={destination} setDestination={setDestination} />}
               {fieldData.id.includes("Date") && (
                 <DatePickerDesktop
+                  // TODO: correggere l'errore quando viene selezionata solo la data di check-out 
                   fieldId={fieldData.id}
                   checkInDate={checkInDate}
                   checkOutDate={checkOutDate}
@@ -122,7 +142,7 @@ export default function SearchForm() {
                   setCheckOutDate={setCheckOutDate}
                 />
                 )}
-              {fieldData.id === "guests" && <GuestsPickerDesktop />}
+              {fieldData.id === "guests" && <GuestsPickerDesktop setGuests={setGuests}/>}
             </div>
           </div>
           {idx < 3 && <div className="field-separator"></div> }

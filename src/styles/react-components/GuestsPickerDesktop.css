@@ -8,6 +8,85 @@ div.guests-picker {
   padding: 32px 24px 32px 24px;
   width: calc(var(--formW) / 2);
   left: calc(((100vw - var(--formW)) / 2) + (var(--formW) / 2));
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+div.guest-selector {
+  /* width: 100%; */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 6px 20px 6px;
+  border-bottom: solid var(--grayhovercolor) 1px;
+}
+div.guest-selector:last-of-type {
+  border-bottom: none;
+}
+
+div.guest-type {
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+span.guest-type-title {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+span.guest-type-description {
+  font-size: 0.9em;
+}
+
+div.guest-number {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & span {
+    width: 40px;
+    text-align: center;
+  }
+}
+button.change-number {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  background-color: inherit;
+  border: solid var(--textlightgraycolor) 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  & img {
+    width: 22px;
+    height: 22px;
+  }
+}
+button.change-number.disabled {
+  cursor: not-allowed;
+}
+button.change-number.enabled:hover {
+  cursor: pointer;
+  border-color: black;
+}
+
+button.clear-guests {
+  background-color: var(--primarycolor);
+  border: none;
+  color: #FFFFFF;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: "Quicksand", sans-serif;
+  line-height: 20px;
+  border-radius: 20px;
+  padding: 10px 13px 10px 13px;
+}
+button.clear-guests:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
 }
 
 @media screen and (max-width: 850px) {
