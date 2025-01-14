@@ -28,17 +28,20 @@ interface Accomodation {
 }
 
 let accomodations= await getAccomodationsByCountry(country) as Accomodation[]
+
 ---
 <div id="accomodations">
   {accomodations && accomodations.map(acc => (
-    <AccomodationCard
-      image={`/accomodations/${acc.images[0]}`}
-      name={acc.name}
-      rating={average(acc.ratings)}
-      price={acc.pricePerNight}
-      city={acc.city}
-      country={acc.country}
-    />
+    <a href={`/accomodations/${acc.id}`} class="accomodation-link">
+      <AccomodationCard
+        image={`/accomodations/${acc.images[0]}`}
+        name={acc.name}
+        rating={average(acc.ratings)}
+        price={acc.pricePerNight}
+        city={acc.city}
+        country={acc.country}
+      />
+    </a>
   ))}
 </div>
 
@@ -48,6 +51,10 @@ let accomodations= await getAccomodationsByCountry(country) as Accomodation[]
     grid-template-columns: repeat(4, 1fr);
     margin: 24px;
     gap: 16px;
+  }
+  a.accomodation-link {
+    text-decoration: none;
+    color: black;
   }
 </style>
 

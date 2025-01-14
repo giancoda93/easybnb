@@ -1,0 +1,33 @@
+---
+// Componenti
+import AccomodationLayout from "../../layouts/AccomodationLayout.astro"
+
+// Database
+import { getAllAccomodations } from "../../db/dbAccomodations"
+
+// Altro
+import type { GetStaticPathsResult } from "astro";
+
+// Percorsi dinamici
+interface Accomodation {
+  id: string;
+  name: string;
+}
+
+export async function getStaticPaths() {
+  const country = "Argentina"
+  const accomodations = await getAllAccomodations() as Accomodation[]
+  let pathParams = [] as GetStaticPathsResult
+  accomodations.forEach( acc => {
+    pathParams.push(
+      { params: { id: acc.id }}
+    )
+  })
+  return pathParams
+}
+
+const { id } = Astro.params
+---
+<AccomodationLayout >
+  
+</AccomodationLayout>
