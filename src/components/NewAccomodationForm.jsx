@@ -1,4 +1,5 @@
 // IMPORT
+
 // React
 import { useEffect, useState } from "react"
 
@@ -8,7 +9,14 @@ import NewAccomodationTextInput from "./new-accomodation-form/NewAccomodationTex
 // Stile
 import "../styles/react-components/NewAccomodationForm.css"
 
+// Database
+import { addAccomodation } from "../db/dbAccomodations"
+
+// Moduli
+import { Country } from "country-state-city"
+
 // COSTANTI
+
 // Elenco campi form
 const formFields = [
   { id: 1, dbName: "city", text: "Città", dataType: "string" },
@@ -18,6 +26,12 @@ const formFields = [
   { id: 5, dbName: "pricePerNight", text: "Prezzo a notte", dataType: "number" },
   { id: 6, dbName: "ratings", text: "Valutazioni", dataType: "array" },
 ]
+
+// FUNZIONI
+function getCountryIsoCode(country) {
+  const countryIsoCode = Country.getAllCountries().find(c => c.name === country).isoCode  
+  return countryIsoCode
+}
 
 // ----------------------------------------------------------------------------
 // Funzione componente
@@ -30,11 +44,8 @@ export default function NewAccomodationForm() {
   const [ratings, setRatings] = useState([])
 
 
-  // **********
-  // TODO: non capisco perchè non funziona il form: ricarica la pagina con il submit e sembra che gli stati non si aggiornino quando cambia il valore dell'input
-  // **********
-
   // Funzioni interne
+
   function chooseState(dbName) {
     // assegna lo stato corrispondente all'input del form
     if(dbName === "city") return city
@@ -55,11 +66,44 @@ export default function NewAccomodationForm() {
     if(dbName === "ratings") return setRatings
   }
 
-  // Handlers
-  function submitHandler(e) {
-    e.preventDefault()
-    // TODO: finire la funzione
+  function deleteFields() {
+    // cancella tutti gli input inseriti nei campi
+    setCity("")
+    setCountry("")
+    setImages([])
+    setName("")
+    setPricePerNight("")
+    setRatings([])
   }
+
+  // Handlers
+
+  function submitHandler(e) {
+    // gestisce l'invio degli input generando un oggetto che verrà caricato sul database
+    e.preventDefault()
+    
+    const newAccomodation = {
+      city,
+      country,
+      images,
+      name,
+      pricePerNight: parseInt(pricePerNight),
+      ratings,
+      countryCode: getCountryIsoCode(country),
+    }
+
+    console.log(newAccomodation)
+    addAccomodation(newAccomodation)
+
+    // deleteFields()
+  }
+
+  // ***************************
+  // TODO: sarebbe comodo aggiungere un controllo per la digitazione delle città e degli stati
+  // verificandone l'esistenza tramite il pacchetto city-country-state. Magari aggiungendo anche
+  // un auto completamento, dei suggerimenti oppure una vera e propria lista dei risultati compatibili
+  // con la stringa di input inserita
+  // ***************************
 
   return (
     <>
@@ -68,6 +112,7 @@ export default function NewAccomodationForm() {
         {formFields.map( field => (
           <NewAccomodationTextInput
             key={field.id}
+            dbName={field.dbName}
             label={field.text}
             dataType={field.dataType}
             state={chooseState(field.dbName)}
@@ -75,7 +120,7 @@ export default function NewAccomodationForm() {
           />
         ))}
         <div className="accomodation-form-buttons">
-          <button className="btn-accomodation cancel" type="reset">Cancella</button>
+          <button className="btn-accomodation cancel" type="button" onClick={() => deleteFields()}>Cancella</button>
           <button className="btn-accomodation submit" type="submit">Aggiungi</button>
         </div>
       </form>

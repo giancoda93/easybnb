@@ -1,8 +1,11 @@
 // firebase
 import { db } from "../firebase/config.js"
-import { collection, query, where, getDocs } from "firebase/firestore"
+import { collection, query, where, getDocs, doc, setDoc, serverTimestamp } from "firebase/firestore"
 
 const accomodationsRef = collection(db, "accomodations")
+
+// ---------------------------------------------------------------------
+// RECUPERO DOCUMENTI DAL DATABASE
 
 // estrae tutti gli alloggi in base alla query inserita
 export async function getAccomodations(objQuery) {
@@ -56,4 +59,20 @@ export async function getAccomodationsByCountry(country) {
   }
 
   return response
+}
+
+// ---------------------------------------------------------------------
+// AGGIUNTA DOCUMENTI AL DATABASE
+
+// aggiunge un documento al database
+export async function addAccomodation(accomodation) {
+  const newDoc = { ...accomodation, timestamp: serverTimestamp() }
+
+  const newDocRef = doc(accomodationsRef)
+
+  try {
+    setDoc(newDocRef, newDoc)
+  } catch (err) {
+    console.error("Errore nel caricamento del documento: ", err)
+  }
 }

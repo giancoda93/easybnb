@@ -27,11 +27,16 @@ span.accomodation-label {
 
 input.accomodation-input-field {
   border: none;
-  margin: 0;
+  margin: 0 8px 0 0 ;
   padding: 0;
   line-height: 24px;
   font-size: 1em;
-  
+}
+
+input.accomodation-input-field[type="number"]::-webkit-outer-spin-button, 
+input.accomodation-input-field[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 input.accomodation-input-field:focus {
@@ -57,10 +62,11 @@ input.accomodation-input-field:focus {
 
 /* Elenco elementi aggiunti all'array */
 .added-values {
-  height: 24px;
+  min-height: 24px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  flex-wrap: wrap;
   gap: 8px;
   padding: 0 32px 0 32px;
   margin-bottom: 24px;
@@ -73,6 +79,10 @@ input.accomodation-input-field:focus {
   border-radius: 4px;
   color: var(--textgraycolor);
   font-weight: 600;
+
+  & .delete-symbol {
+    margin-right: 8px;
+  }
 }
 .single-value:hover {
   cursor: pointer;

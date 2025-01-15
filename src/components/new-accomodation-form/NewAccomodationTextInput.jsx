@@ -1,6 +1,6 @@
 // IMPORT
 // React
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 // Stile
 import "../../styles/react-components/NewAccomodationTextInput.css"
@@ -10,19 +10,13 @@ import AddIconWhite from "/add-white.svg?url"
 
 // ---------------------------------------------------------------------------------------
 // Funzione componente
-export default function NewAccomodationTextInput({ label, dataType, state, setState }) {
+export default function NewAccomodationTextInput({ label, dbName, dataType, state, setState }) {
   const [text, setText] = useState("")
-
-  // useEffect(() => {
-  //   console.log(label, state)
-  // }, [state])
-
-  // useEffect(() => {
-  //   console.log(label, "stato sostitutivo", text)
-  // }, [text])
 
   // Handlers
   function changeHandler(value) {
+    // aggiorna lo stato direttamente se il tipo di dato non è un array, altrimenti
+    // passa la stringa in uno stato intermedio da aggiungere poi all'array
     if(dataType != "array") {
       setState(value)
     } else {
@@ -31,20 +25,22 @@ export default function NewAccomodationTextInput({ label, dataType, state, setSt
   }
 
   function clickHandler() {
-    setState(prev => [...prev, text])
+    // aggiunge l'input all'array dello stato se il dataType è "array"
+    let element = dbName === "ratings" ? parseInt(text) : text
+
+    setState(prev => [...prev, element])
     setText("")
   }
 
-  function deleteElement(element) {
-    let modifiedArray = []
-    state.forEach(el => {
-      if(el != element) {
-        modifiedArray.push(el)
-      }
-    })
+  function deleteElement(idx) {
+    // cancella un elemento dell'array dello stato
+    let tempArray = [...state]
+    let modifiedArray = tempArray.filter((_, index) => index != idx)
+
     setState([...modifiedArray])
   }
-  
+
+
   return (
     <>
       <label className="accomodation-text-input">
@@ -52,7 +48,7 @@ export default function NewAccomodationTextInput({ label, dataType, state, setSt
           <span className="accomodation-label">{label}</span>
           <input
             className="accomodation-input-field" 
-            type="text"
+            type={dataType == "number" ? "number" : "text"}
             value={dataType === "array" ? text : state}
             onChange={(e) => changeHandler(e.target.value)}
           />
@@ -65,8 +61,11 @@ export default function NewAccomodationTextInput({ label, dataType, state, setSt
       </label>
       {dataType == "array" && (
         <div className="added-values">
-          {state.map(el => (
-            <div key={el} className="single-value" onClick={() => deleteElement(el)}>{el}</div>
+          {state.map((el, idx) => (
+            <div key={idx} className="single-value" onClick={() => deleteElement(idx)}>
+              <span className="delete-symbol">✕</span> 
+              <span>{`${el}${dbName == "ratings" ? " ★" : ""}`}</span>
+            </div>
           ))}
         </div>
       )}
