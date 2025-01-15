@@ -82,19 +82,7 @@ export default function SearchForm() {
     return () => document.removeEventListener("click", globalClickHandler)
   }, [])
 
-  function handleClickDb(country) {
-    let accomodations = []
-    getAccomodationsByCountry(country)
-      .then(res => {
-        accomodations.push(...res)
-      })
-      .catch(err => {
-        console.error(err)
-      })
-    
-      setResult(...accomodations)
-      // console.log(accomodations)
-  }
+  // TODO: aggiungere filtro alle città mostrate in base agli alloggi disponibili e all'input
 
   return (
     <form 

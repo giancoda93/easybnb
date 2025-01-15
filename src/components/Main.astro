@@ -3,7 +3,7 @@
 import AccomodationCard from "./AccomodationCard.astro"
 
 // import database
-import { getAccomodationsByCountry } from "../db/dbAccomodations.js"
+import { getAccomodationsByCountry, getAllAccomodations } from "../db/dbAccomodations.js"
 
 // Funzioni
 function average(array: number[]) {
@@ -27,7 +27,7 @@ interface Accomodation {
   country: string;
 }
 
-let accomodations= await getAccomodationsByCountry(country) as Accomodation[]
+let accomodations = await getAccomodationsByCountry(country) as Accomodation[]
 
 ---
 <div id="accomodations">

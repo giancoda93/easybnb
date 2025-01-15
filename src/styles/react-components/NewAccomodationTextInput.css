@@ -1,0 +1,56 @@
+/* Text input component */
+label.accomodation-text-input {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 8px 8px 32px;
+  margin-bottom: 12px;
+  background-color: #FFFFFF;
+  border-radius: 32px;
+  border: solid 1px var(--grayhovercolor);
+}
+
+/* Label e input */
+div.label-input-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+span.accomodation-label {
+  padding: 0;
+  line-height: 24px;
+  color: var(--textlightgraycolor);
+}
+
+input.accomodation-input-field {
+  border: none;
+  margin: 0;
+  padding: 0;
+  line-height: 24px;
+  font-size: 1em;
+  
+}
+
+input.accomodation-input-field:focus {
+  outline: none;
+}
+
+/* Bottone aggiungi */
+.btn-add-array {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--primarycolor);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-add-array:hover {
+  cursor: pointer;
+  filter: brightness(0.8);
+}

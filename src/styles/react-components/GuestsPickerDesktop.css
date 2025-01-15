@@ -54,7 +54,7 @@ button.change-number {
   height: 32px;
   width: 32px;
   border-radius: 50%;
-  background-color: inherit;
+  background-color: #FFFFFF;
   border: solid var(--textlightgraycolor) 1px;
   display: flex;
   justify-content: center;

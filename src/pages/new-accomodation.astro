@@ -1,0 +1,43 @@
+---
+// Componenti
+import Navbar from "../components/Navbar.astro"
+import NewAccomodationForm from "../components/NewAccomodationForm.jsx"
+
+// Styles
+import "../styles/global.css"
+---
+<html lang="it">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Easybnb - New Accomodation</title>
+	</head>
+	<body>
+    <header>
+      <Navbar />
+    </header>
+    <main id="new-accomodation-form">
+      <NewAccomodationForm />
+    </main>
+	</body>
+</html>
+
+<style>
+  header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid 1px var(--grayhovercolor);
+  }
+
+  main#new-accomodation-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+</style>

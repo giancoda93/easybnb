@@ -15,7 +15,6 @@ interface Accomodation {
 }
 
 export async function getStaticPaths() {
-  const country = "Argentina"
   const accomodations = await getAllAccomodations() as Accomodation[]
   let pathParams = [] as GetStaticPathsResult
   accomodations.forEach( acc => {

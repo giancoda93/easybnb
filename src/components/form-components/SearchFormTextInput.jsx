@@ -13,7 +13,8 @@ export default function SearchFormTextInput({ fieldId, label, placeholder, chang
         <input
           id={`${fieldId}-input`}
           className="text-input-field" 
-          type="text" placeholder={placeholder} 
+          type="text" 
+          placeholder={placeholder} 
           onChange={changeHandler} 
           value={value}
           onFocus={(e) => fieldFocusHandler(e.target.parentElement.parentElement.id, ...setters)}
