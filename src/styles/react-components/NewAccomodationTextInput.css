@@ -54,3 +54,26 @@ input.accomodation-input-field:focus {
   cursor: pointer;
   filter: brightness(0.8);
 }
+
+/* Elenco elementi aggiunti all'array */
+.added-values {
+  height: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 0 32px 0 32px;
+  margin-bottom: 24px;
+}
+.single-value {
+  background-color: var(--grayhovercolor);
+  padding: 4px 6px 4px 6px;
+  line-height: 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: var(--textgraycolor);
+  font-weight: 600;
+}
+.single-value:hover {
+  cursor: pointer;
+}

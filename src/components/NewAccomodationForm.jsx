@@ -55,10 +55,16 @@ export default function NewAccomodationForm() {
     if(dbName === "ratings") return setRatings
   }
 
+  // Handlers
+  function submitHandler(e) {
+    e.preventDefault()
+    // TODO: finire la funzione
+  }
+
   return (
     <>
       <h1 className="form-title">Nuovo Alloggio</h1>
-      <form id="new-accomodation">
+      <form id="new-accomodation" onSubmit={(e) => submitHandler(e)}>
         {formFields.map( field => (
           <NewAccomodationTextInput
             key={field.id}
@@ -69,7 +75,7 @@ export default function NewAccomodationForm() {
           />
         ))}
         <div className="accomodation-form-buttons">
-          <button className="btn-accomodation cancel" type="cancel">Cancella</button>
+          <button className="btn-accomodation cancel" type="reset">Cancella</button>
           <button className="btn-accomodation submit" type="submit">Aggiungi</button>
         </div>
       </form>
