@@ -1,8 +1,8 @@
 // IMPORT
 import { eachDayOfInterval, isBefore } from 'date-fns'
-import { Country, City } from "country-state-city";
-// Database
-import { getAccomodationsByCity } from '../db/dbAccomodations';
+import { Country, City } from "country-state-city"
+// Store
+import { searchCriteria } from '../store/store'
 
 // -----------------------------------------------------------------------------------------------------------------
 // COSTANTI
@@ -105,17 +105,16 @@ export const fieldFocusHandler = (targetId, setFields, setButton, setForm, setPi
 export const submitHandler = (e, destination, checkInDate, checkOutDate, guests) => {
   e.preventDefault()
 
-  const searchCriteria = {
+  const searchObj = {
     destination,
     checkInDate,
     checkOutDate,
     guests,
   }
 
-  const event = new CustomEvent("searchEvent", {
-    detail: searchCriteria,
-  })
-  window.dispatchEvent(event)
+  searchCriteria.set({ ...searchObj })
+
+  console.log(searchCriteria.get())
 }
 
 // -----------------------------------------------------------------------------------------------------------------

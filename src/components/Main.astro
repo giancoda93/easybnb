@@ -5,6 +5,9 @@ import AccomodationCard from "./AccomodationCard.astro"
 // import database
 import { getAccomodationsByCountry, getAccomodationsByCity, getAllAccomodations } from "../db/dbAccomodations.js"
 
+// Store
+import { searchCriteria } from "../store/store"
+
 // Funzioni
 function average(array: number[]) {
   let sum = 0
@@ -26,9 +29,11 @@ interface Accomodation {
   country: string;
 }
 
-let accomodations = await getAllAccomodations() as Accomodation[]
+// TODO: CONVERTIRE QUESTO COMPONENTE "Main" IN UN COMPONENTE REACT PER RENDERE IL CARICAMENTO DEGLI ALLOGGI DINAMICO
+// --> IL ROUTING CON REACT POTREBBE CAMBIARE E GENERARE PROBLEMI
 
-// TODO: SISTEMARE
+// Recupera tutti gli alloggi
+let accomodations = await getAllAccomodations() as Accomodation[]
 
 ---
 <div id="accomodations">
@@ -45,6 +50,7 @@ let accomodations = await getAllAccomodations() as Accomodation[]
     </a>
   ))}
 </div>
+
 
 <style>
   div#accomodations {
