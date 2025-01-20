@@ -102,12 +102,20 @@ export const fieldFocusHandler = (targetId, setFields, setButton, setForm, setPi
   })
 }
 
-export const submitHandler = (e, destination, checkInDate, checkOutDate, guests, setResult) => {
+export const submitHandler = (e, destination, checkInDate, checkOutDate, guests) => {
   e.preventDefault()
-  console.log(destination, checkInDate, checkOutDate, guests)
-  
-  let accomodations = getAccomodationsByCity(destination)
-  setResult([...accomodations])
+
+  const searchCriteria = {
+    destination,
+    checkInDate,
+    checkOutDate,
+    guests,
+  }
+
+  const event = new CustomEvent("searchEvent", {
+    detail: searchCriteria,
+  })
+  window.dispatchEvent(event)
 }
 
 // -----------------------------------------------------------------------------------------------------------------

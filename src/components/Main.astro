@@ -15,7 +15,6 @@ function average(array: number[]) {
 }
 
 // Recupera dati lato server
-const country = "Argentina"
 
 interface Accomodation {
   id: string;
@@ -27,8 +26,9 @@ interface Accomodation {
   country: string;
 }
 
-// let accomodations = await getAccomodationsByCountry(country) as Accomodation[]
 let accomodations = await getAllAccomodations() as Accomodation[]
+
+// TODO: SISTEMARE
 
 ---
 <div id="accomodations">

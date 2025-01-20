@@ -45,9 +45,6 @@ export default function SearchForm() {
   const [checkOutDate, setCheckOutDate] = useState("")
   const [guests, setGuests] = useState("")
 
-  // stato per risultati ricerca
-  const [result, setResult] = useState([])
-
   // Ref
   const formRef = useRef(null)
 
@@ -89,7 +86,7 @@ export default function SearchForm() {
       id="search-form" 
       ref={formRef} 
       className={`${isFormActive ? "" : "inactive"}`}
-      onSubmit={(e) => submitHandler(e, destination, checkInDate, checkOutDate, guests, setResult)}
+      onSubmit={(e) => submitHandler(e, destination, checkInDate, checkOutDate, guests)}
     >
       {searchFormFieldsData.map((fieldData, idx) => (
         <React.Fragment key={fieldData.id}>
