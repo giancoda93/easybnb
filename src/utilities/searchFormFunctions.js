@@ -1,8 +1,7 @@
 // IMPORT
 import { eachDayOfInterval, isBefore } from 'date-fns'
-import { Country, City } from "country-state-city"
 // Store
-import { searchCriteria } from '../store/store'
+import { $searchCriteria } from '../store/store'
 
 // -----------------------------------------------------------------------------------------------------------------
 // COSTANTI
@@ -112,9 +111,7 @@ export const submitHandler = (e, destination, checkInDate, checkOutDate, guests)
     guests,
   }
 
-  searchCriteria.set({ ...searchObj })
-
-  console.log(searchCriteria.get())
+  $searchCriteria.set({ ...searchObj })
 }
 
 // -----------------------------------------------------------------------------------------------------------------
