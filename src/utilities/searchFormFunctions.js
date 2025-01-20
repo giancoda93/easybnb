@@ -1,6 +1,8 @@
 // IMPORT
 import { eachDayOfInterval, isBefore } from 'date-fns'
 import { Country, City } from "country-state-city";
+// Database
+import { getAccomodationsByCity } from '../db/dbAccomodations';
 
 // -----------------------------------------------------------------------------------------------------------------
 // COSTANTI
@@ -100,9 +102,12 @@ export const fieldFocusHandler = (targetId, setFields, setButton, setForm, setPi
   })
 }
 
-export const submitHandler = (e, destination, checkInDate, checkOutDate, guests) => {
+export const submitHandler = (e, destination, checkInDate, checkOutDate, guests, setResult) => {
   e.preventDefault()
   console.log(destination, checkInDate, checkOutDate, guests)
+  
+  let accomodations = getAccomodationsByCity(destination)
+  setResult([...accomodations])
 }
 
 // -----------------------------------------------------------------------------------------------------------------
@@ -229,11 +234,11 @@ export function stringToDate(string) {
 
 
 // filtra le città mostrate nella ricerca in base alla stringa inserita nell'input
-export function filteredCities(input) {
-  const matchedCities = City.getAllCities().filter(city => {
-    if (city.name.slice(0, input.length).toLowerCase() == input.toLowerCase()) {
+export function filteredCities(input, cities) {
+  const matchedCities = cities.filter(city => {
+    if (city.cityName.slice(0, input.length).toLowerCase() == input.toLowerCase()) {
       return city
     }
   })
-  return matchedCities.sort((a, b) => a.name.localeCompare(b.name)).slice(0, 10)
+  return matchedCities.sort((a, b) => a.cityName.localeCompare(b.cityName)).slice(0, 10)
 }

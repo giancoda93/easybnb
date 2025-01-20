@@ -94,6 +94,7 @@ export default function NewAccomodationForm() {
 
     console.log(newAccomodation)
     addAccomodation(newAccomodation)
+    console.log("Alloggio aggiunto", country)
 
     // deleteFields()
   }
@@ -103,6 +104,8 @@ export default function NewAccomodationForm() {
   // verificandone l'esistenza tramite il pacchetto city-country-state. Magari aggiungendo anche
   // un auto completamento, dei suggerimenti oppure una vera e propria lista dei risultati compatibili
   // con la stringa di input inserita
+  // TODO: aggiungere un alert con timeout per confermare la riuscita dell'aggiunta di un nuovo
+  // alloggio. Eventualmente aggiungere dei controlli per evitare errori negli input del form
   // ***************************
 
   return (

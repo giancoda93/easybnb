@@ -1,11 +1,17 @@
 // Import principali
 import { filteredCities } from "../../utilities/searchFormFunctions"
 
+// Database
+import { getAccomodationLocations } from "../../db/dbAccomodations"
+
 // Icone
 import LocationIcon from "/location.svg?url"
 
 // Styles
 import "../../styles/react-components/RegionPickerDesktop.css"
+
+// React
+import { useEffect } from "react"
 
 // Costanti
 const regions = [
@@ -16,6 +22,8 @@ const regions = [
   {image: "../../../images/uk.webp", text: "Regno Unito"},
   {image: "../../../images/africa.webp", text: "Africa"},
 ]
+
+const availableDestinations = await getAccomodationLocations()  // array che contiene tutte le destinazioni disponibili
 
 // -----------------------------------------------------------------------------------------------------
 // Componente region card
@@ -52,15 +60,15 @@ export default function RegionPickerDesktop({ destination, setDestination }) {
       {/* Se scrivo mostro i primi 10 risultati di città */}
       {destination && (
         <div className="cities-list">
-          {filteredCities(destination) && filteredCities(destination).map((city, idx) => (
+          {filteredCities(destination, availableDestinations) && filteredCities(destination, availableDestinations).map((city, idx) => (
             <div key={idx} className="listed-city">
-              <div className="listed-city-link" onClick={() => setDestination(`${city.name}, ${city.countryCode}`)}>
+              <div className="listed-city-link" onClick={() => setDestination(`${city.cityName}, ${city.countryCode}`)}>
                 <img src={LocationIcon} alt="location icon" />
-                <span>{`${city.name}, ${city.countryCode}`}</span>
+                <span>{`${city.cityName}, ${city.countryCode}`}</span>
               </div>
             </div>
           ))}
-          {filteredCities(destination).length == 0 && (
+          {filteredCities(destination, availableDestinations).length == 0 && (
             <div className="no-cities">
               <span>Non sono disponibili destinazioni.</span>
             </div>

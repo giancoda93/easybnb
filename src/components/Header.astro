@@ -5,11 +5,12 @@ import Navbar from "./Navbar.astro"
 import SearchFormMobile from "./SearchFormMobile.astro"
 // react
 import SearchForm from "./SearchForm.jsx"
+
 ---
 
 <header>
   <Navbar />
-  <SearchForm client:load />
+  <SearchForm client:load/>
   <SearchFormMobile />
 </header>
 

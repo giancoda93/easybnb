@@ -89,7 +89,7 @@ export default function SearchForm() {
       id="search-form" 
       ref={formRef} 
       className={`${isFormActive ? "" : "inactive"}`}
-      onSubmit={(e) => submitHandler(e, destination, checkInDate, checkOutDate, guests)}
+      onSubmit={(e) => submitHandler(e, destination, checkInDate, checkOutDate, guests, setResult)}
     >
       {searchFormFieldsData.map((fieldData, idx) => (
         <React.Fragment key={fieldData.id}>
