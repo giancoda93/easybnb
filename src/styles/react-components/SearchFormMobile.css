@@ -1,0 +1,87 @@
+@import url("../global.css");
+
+/* Container principali */
+.search-mobile-container {
+  width: 100%;
+  padding: 16px 24px 0 24px;
+}
+.search-mobile {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Container bottoni */
+.search-button-container,
+.filter-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.search-button-container {
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 28px;
+  box-shadow: 2px 2px 5px 2px var(--grayhovercolor);
+
+  & .icon-container {
+    width: 52px;
+    height: 20px;
+  }
+}
+.filter-button-container {
+  height: 100%;
+  width: 50px;
+}
+
+/* Bottone cerca */
+.search-btn {
+  width: 100%;
+  height: 100%;
+  background-color: inherit;
+  border: none;
+  border-radius: inherit;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+p.title {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  font-size: 0.9em;
+  margin: 0;
+  text-align: start;
+}
+span.choice, span.separator {
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.8em;
+  color: var(--textgraycolor);
+}
+span.choice {
+  font-weight: 500;
+}
+span.separator {
+  padding: 0 6px 0 6px;
+}
+
+/* -------------------------------------------------------- */
+@media screen and (min-width: 760px) {
+  .search-mobile-container {
+    display: none;
+  }
+}
+@media screen and (max-width: 400px) {
+  p.title {
+    font-size: 0.7em;
+  }
+  span.choice, span.separator {
+    font-size: 0.6em;
+  }
+}

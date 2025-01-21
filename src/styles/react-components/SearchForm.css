@@ -173,7 +173,7 @@ button.cancel-input img {
 }
 
 /* --------------------------------------------------------------- */
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 900px) {
   .large-field {
     width: var(--largeFieldTabletW);
   }

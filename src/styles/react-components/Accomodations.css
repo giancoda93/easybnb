@@ -34,17 +34,47 @@ div.title {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+span.name {
+  font-weight: 700;
+  font-size: 1.1em;
+}
 
-  & .name {
-    font-weight: 700;
-    font-size: 1.1em;
-  }
-
-  & .rating {
-    font-size: 1.1em;
-  }
+span.rating {
+  font-size: 1.1em;
 }
 
 span.location {
   margin-bottom: 6px;
+}
+
+/* --------------------------------------------------------------- */
+@media screen and (max-width: 1180px) {
+  div#accomodations {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  div#accomodations {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  div#accomodations {
+    grid-template-columns: 1fr;
+  }
+  span.name {
+    font-size: 1em;
+  }
+  span.rating {
+    font-size: 1em;
+  }
+  span.location {
+    font-size: 0.9em;
+  }
+  span.price {
+    font-size: 0.9em;
+  }
 }

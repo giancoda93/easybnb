@@ -3,9 +3,10 @@
 
 // astro
 import Navbar from "./Navbar.astro"
-import SearchFormMobile from "./SearchFormMobile.astro"
+// import SearchFormMobile from "./SearchFormMobile.astro"
 // react
 import SearchForm from "./SearchForm.jsx"
+import SearchFormMobile from "./SearchFormMobile.jsx"
 
 // FUNZIONI
 
@@ -14,8 +15,9 @@ import SearchForm from "./SearchForm.jsx"
 
 <header>
   <Navbar />
-  <SearchForm client:load/>
-  <SearchFormMobile />
+  <SearchForm client:load />
+  <SearchFormMobile client:load />
+  <!-- <SearchFormMobile /> -->
 </header>
 
 <style>

@@ -9,5 +9,6 @@ export default defineConfig({
     svg: true,
   },
 
-  integrations: [react()]
+  integrations: [react()],
+  
 });
