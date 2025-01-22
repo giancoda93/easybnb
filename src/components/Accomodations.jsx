@@ -11,7 +11,7 @@ import AccomodationCard from "./AccomodationCard.jsx";
 import { getAllAccomodations } from "../db/dbAccomodations";
 
 // Store
-import { $searchCriteria } from "../store/store";
+import { $searchCriteria, $showDialog } from "../store/store";
 import { useStore } from "@nanostores/react";
 
 // React
@@ -37,6 +37,7 @@ export default function Accomodations() {
 
   // Store
   const searchCriteria = useStore($searchCriteria)
+  const showDialog = useStore($showDialog)  // serve per nascondere gli alloggi quando è aperto il form dialog per mobile
 
   useEffect(() => {
     // TODO: Per ora si può filtrare solo con il nome della città
@@ -49,7 +50,7 @@ export default function Accomodations() {
   }, [searchCriteria])
 
   return (
-    <div id="accomodations">
+    <div id="accomodations" className={`${showDialog ? "accomodations-hidden" : ""}`}>
       {filteredAccomodations &&
         filteredAccomodations.map((acc) => (
           <a href={`/accomodations/${acc.id}`} className="accomodation-link" key={acc.id}>

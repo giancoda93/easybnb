@@ -32,7 +32,10 @@
 
   & .icon-container {
     width: 52px;
-    height: 20px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 .filter-button-container {
@@ -51,6 +54,9 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+}
+.search-btn:hover {
+  cursor: pointer;
 }
 p.title {
   font-family: "Quicksand", sans-serif;

@@ -4,6 +4,7 @@
 import Header from "../components/Header.astro"
 // -- react
 import Accomodations from "../components/Accomodations.jsx"
+import FormDialog from "../components/form-components/FormDialog.jsx"
 
 // Styles
 import "../styles/global.css"
@@ -18,6 +19,7 @@ import "../styles/global.css"
 	</head>
 	<body>
     <Header />
-		<Accomodations client:load/>
+		<Accomodations client:load />
+		<FormDialog client:load />
 	</body>
 </html>

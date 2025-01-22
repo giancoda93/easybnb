@@ -4,10 +4,14 @@ div#accomodations {
   grid-template-columns: repeat(4, 1fr);
   margin: 24px;
   gap: 16px;
+  position: relative;
 }
 a.accomodation-link {
   text-decoration: none;
   color: black;
+}
+div#accomodations.accomodations-hidden {
+  display: none;
 }
 
 /* Accomodation Card */

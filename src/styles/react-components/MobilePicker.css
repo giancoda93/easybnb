@@ -1,0 +1,44 @@
+/* MobilePicker */
+
+.mobile-picker {
+  width: 100%;
+  padding: 24px 20px 24px 20px;
+  margin-top: 16px;
+  border-radius: 16px;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 10px 2px var(--grayhovercolor);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobile-picker:hover {
+  cursor: pointer;
+}
+
+/* Mobile picker collapsed */
+.collapsed-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  & .mobile-picker-text {
+    margin-right: auto;
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--textlightgraycolor);
+  }
+
+  & .mobile-picker-value {
+    font-size: 1em;
+    font-weight: 600;
+  }
+}
+
+
+/* Mobile picker expanded */
+.expanded-container {
+  width: 100%;
+}
