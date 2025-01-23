@@ -13,8 +13,8 @@ div.region-picker {
   z-index: 2;
 }
 
-h2 {
-  margin: 0 0 16px 8px;
+h2.region-picker-desktop-title {
+  margin: 0 0 16px 0;
 }
 div.regions-container {
   display: grid;

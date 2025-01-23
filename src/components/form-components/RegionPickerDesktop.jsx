@@ -44,7 +44,7 @@ export default function RegionPickerDesktop({ destination, setDestination }) {
       {/* Se non viene scritto nulla mostro regioni */}
       {!destination && 
         <>
-          <h2>Cerca per regione</h2>
+          <h2 className="region-picker-desktop-title">Cerca per regione</h2>
           <div className="regions-container">
             {regions.map((region) => (
               <RegionCard
