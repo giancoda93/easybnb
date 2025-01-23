@@ -1,4 +1,9 @@
-// Import principali
+// IMPORT
+
+// Componenti
+import GuestSelector from "./GuestSelector.jsx"
+
+// React
 import { useEffect, useState } from "react"
 
 // Costanti
@@ -9,7 +14,7 @@ import AddIcon from "/add.svg?url"
 import RemoveIcon from "/remove.svg?url"
 
 // Styles
-import "../../styles/react-components/GuestsPickerDesktop.css"
+// import "../../styles/react-components/GuestsPickerDesktop.css"
 
 // -------------------------------------------------------------------------------------
 

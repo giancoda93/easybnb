@@ -1,0 +1,27 @@
+/* Guests picker container */
+div.guests-picker-mobile {
+  display: flex;
+  flex-direction: column;  
+
+  & h2 {
+    text-align: start;
+  }
+}
+
+/* Bottone clear guests */
+button.clear-guests {
+  background-color: var(--primarycolor);
+  border: none;
+  color: #FFFFFF;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: "Quicksand", sans-serif;
+  line-height: 20px;
+  border-radius: 20px;
+  padding: 10px 13px 10px 13px;
+  margin-top: 8px;
+}
+button.clear-guests:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}

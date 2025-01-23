@@ -13,10 +13,6 @@
   align-items: center;
 }
 
-.mobile-picker:hover {
-  cursor: pointer;
-}
-
 /* Mobile picker collapsed */
 .collapsed-container {
   width: 100%;
@@ -35,6 +31,10 @@
     font-size: 1em;
     font-weight: 600;
   }
+}
+
+.collapsed-container:hover {
+  cursor: pointer;
 }
 
 

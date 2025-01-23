@@ -1,4 +1,5 @@
 import { atom, map } from "nanostores"
+import { Children } from "react"
 
 // ---------------
 // Qui vengono gestite le variabili (o stati) globali e accessibili da tutti i componenti
@@ -22,4 +23,12 @@ export const $mobilePickersCollapsed = map({
   destination: true,
   dates: true,
   guests: true,
+})
+
+// Tipo di ospiti
+export const $guestsCount = map({
+  adults: 0,
+  children: 0,
+  infants: 0,
+  pets: 0,
 })
