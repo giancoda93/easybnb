@@ -1,5 +1,10 @@
+// IMPORT
+
 import { atom, map } from "nanostores"
-import { Children } from "react"
+import { getAllAccomodations } from "../db/dbAccomodations"
+
+// COSTANTI
+const allAccomodations = await getAllAccomodations()
 
 // ---------------
 // Qui vengono gestite le variabili (o stati) globali e accessibili da tutti i componenti
@@ -32,3 +37,11 @@ export const $guestsCount = map({
   infants: 0,
   pets: 0,
 })
+
+// Elenco alloggi disponibili, varia in base ai criteri di ricerca
+export const $accomodations = atom([ ...allAccomodations.response ])
+
+// ---------------------------------------------------
+// Errori
+// ---------------------------------------------------
+export const $dbError = atom(allAccomodations.error)

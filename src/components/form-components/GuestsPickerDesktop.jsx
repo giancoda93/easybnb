@@ -3,15 +3,11 @@
 // Componenti
 import GuestSelector from "./GuestSelector.jsx"
 
-// React
-import { useEffect, useState } from "react"
-
 // Costanti
 import { guestOptions } from "../../utilities/searchFormFunctions"
 
 // Store
-import { $searchCriteria, $guestsCount } from "../../store/store.js"
-import { useStore } from "@nanostores/react"
+import { $guestsCount } from "../../store/store.js"
 
 // Styles
 import "../../styles/react-components/GuestsPickerDesktop.css"

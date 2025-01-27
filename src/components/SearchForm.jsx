@@ -91,7 +91,7 @@ export default function SearchForm() {
       id="search-form" 
       ref={formRef} 
       className={`${isFormActive ? "" : "inactive"}`}
-      onSubmit={(e) => submitHandler(e, destination, checkInDate, checkOutDate, guests)}
+      onSubmit={(e) => submitHandler(e)}
     >
       {searchFormFieldsData.map((fieldData, idx) => (
         <React.Fragment key={fieldData.id}>
@@ -104,11 +104,11 @@ export default function SearchForm() {
                 fieldId={fieldData.id}
                 label={fieldData.label}
                 placeholder={fieldData.placeholder}
-                changeHandler={chooseChangeHandler(fieldData.id, setDestination, setCheckInDate, setCheckOutDate, setGuests)}
-                inputHandler={chooseInputHandler(fieldData.id)}
-                value={chooseValue(fieldData.id, destination, checkInDate, checkOutDate, guests)}
-                setValue={chooseSetValue(fieldData.id, setDestination, setCheckInDate, setCheckOutDate, setGuests)}
-                setters={[setFieldsStates, setIsButtonWide, setIsFormActive, setPickersVisibility]}
+                changeHandler={chooseChangeHandler(fieldData.id)}
+                inputHandler={chooseInputHandler(fieldData.id)}   // TODO: da sistemare nel file esterno
+                value={chooseValue(fieldData.id)}
+                setValue={chooseSetValue(fieldData.id)}
+                setters={[setFieldsStates, setIsButtonWide, setIsFormActive, setPickersVisibility]}   // riguarda solo le classi CSS
               />
               {fieldData.id === "guests" && (
                 <button type="submit" id="btn-submit" className={`${isButtonWide ? "wide" : ""}`}>
@@ -118,17 +118,8 @@ export default function SearchForm() {
               )}
             </div>
             <div id={`${fieldData.id}-picker-wrapper`} className={`wrapper ${pickersVisibility[fieldData.id] ? "" : "hidden"}`}>
-              {fieldData.id === "destination" && <RegionPickerDesktop destination={destination} setDestination={setDestination} />}
-              {fieldData.id.includes("Date") && (
-                <DatePickerDesktop
-                  // TODO: correggere l'errore quando viene selezionata solo la data di check-out 
-                  fieldId={fieldData.id}
-                  checkInDate={checkInDate}
-                  checkOutDate={checkOutDate}
-                  setCheckInDate={setCheckInDate} 
-                  setCheckOutDate={setCheckOutDate}
-                />
-                )}
+              {fieldData.id === "destination" && <RegionPickerDesktop/>}
+              {fieldData.id.includes("Date") && <DatePickerDesktop fieldId={fieldData.id} />}
               {fieldData.id === "guests" && <GuestsPickerDesktop />}
             </div>
           </div>

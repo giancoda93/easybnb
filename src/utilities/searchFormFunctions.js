@@ -1,7 +1,13 @@
 // IMPORT
+
+// Funzioni
 import { eachDayOfInterval, isBefore } from 'date-fns'
+
 // Store
-import { $searchCriteria, $guestsCount } from '../store/store'
+import { $searchCriteria, $guestsCount, $accomodations, $dbError } from '../store/store'
+
+// Database
+import { getAccomodationsByCity, getAllAccomodations } from '../db/dbAccomodations'
 
 // --------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------
@@ -28,13 +34,13 @@ export const fieldInitialState = {
 // --------------------------------------------------------------------------------------------------------
 // conversione da numero a nome del giorno della settimana
 export const dayName = [
-  [0, "Domenica"],
-  [1, "Lunedì"],
-  [2, "Martedì"],
-  [3, "Mercoledì"],
-  [4, "Giovedì"],
-  [5, "Venerdì"],
-  [6, "Sabato"],
+  "Domenica",
+  "Lunedì",
+  "Martedì",
+  "Mercoledì",
+  "Giovedì",
+  "Venerdì",
+  "Sabato",
 ]
 
 // --------------------------------------------------------------------------------------------------------
@@ -111,17 +117,25 @@ export const fieldFocusHandler = (targetId, setFields, setButton, setForm, setPi
   })
 }
 
-export const submitHandler = (e, destination, checkInDate, checkOutDate, guests) => {
+export async function submitHandler(e) {
   e.preventDefault()
 
-  const searchObj = {
-    destination,
-    checkInDate,
-    checkOutDate,
-    guests,
+  const searchCriteria = $searchCriteria.get()
+
+  if (searchCriteria.destination) {
+    let accomodationsByCity = await getAccomodationsByCity(searchCriteria.destination)
+
+    $accomodations.set([ ...accomodationsByCity.response ])
+    $dbError.set(accomodationsByCity.error)
+
+  } else {
+    let allAccomodations = await getAllAccomodations()
+
+    $accomodations.set([ ...allAccomodations.response ])
+    $dbError.set(allAccomodations.error)
   }
 
-  $searchCriteria.set({ ...searchObj })
+  // TODO: PROBLEMA: l'elenco degli alloggi $accomodations non torna a comprenderli tutti se invio gli input senza dati!!!!
 }
 
 // --------------------------------------------------------------------------------------------------------
@@ -131,16 +145,16 @@ export const submitHandler = (e, destination, checkInDate, checkOutDate, guests)
 
 // --------------------------------------------------------------------------------------------------------
 // sceglie quale funzione click handler assegnare ad ogni campo del form
-export const chooseChangeHandler = (fieldId, setDestination, setCheckInDate, setCheckOutDate, setGuests) => {
+export const chooseChangeHandler = (fieldId) => {
   switch (fieldId) {
     case searchFormFieldsData[0].id:
-      return (e) => setDestination(e.target.value)
+      return (e) => $searchCriteria.setKey("destination", e.target.value)
     case searchFormFieldsData[1].id:
-      return (e) => setCheckInDate(e.target.value)
+      return (e) => $searchCriteria.setKey("checkInDate", e.target.value)
     case searchFormFieldsData[2].id:
-      return (e) => setCheckOutDate(e.target.value)
+      return (e) => $searchCriteria.setKey("checkOutDate", e.target.value)
     case searchFormFieldsData[3].id:
-      return (e) => setGuests(e.target.value)
+      return (e) => $searchCriteria.setKey("guests", e.target.value)
     default:
       return (e) => console.log("Change handler non definito")
   }
@@ -164,33 +178,33 @@ export const chooseInputHandler = (fieldId) => {
 
 // --------------------------------------------------------------------------------------------------------
 // sceglie quale stato associare ad un campo input
-export const chooseValue = (fieldId, destination, checkInDate, checkOutDate, guests) => {
+export const chooseValue = (fieldId) => {
   switch (fieldId) {
     case "destination":
-      return destination
+      return $searchCriteria.get().destination
     case "checkInDate":
-      return checkInDate
+      return $searchCriteria.get().checkInDate
     case "checkOutDate" :
-      return checkOutDate
+      return $searchCriteria.get().checkOutDate
     case "guests":
-      return guests
+      return $searchCriteria.get().guests
     default:
       return null
   }
 }
 
 // --------------------------------------------------------------------------------------------------------
-// sceglie quale funzione "setState" associare ad un campo input
-export const chooseSetValue = (fieldId, setDestination, setCheckInDate, setCheckOutDate, setGuests) => {
+// sceglie quale proprietà di di $searchCriteria va modificata
+export const chooseSetValue = (fieldId) => {
   switch (fieldId) {
     case "destination":
-      return setDestination
+      return function setDestination(value) {$searchCriteria.setKey("destination", value)}
     case "checkInDate":
-      return setCheckInDate
+      return function setCheckInDate(value) {$searchCriteria.setKey("checkInDate", value)}
     case "checkOutDate" :
-      return setCheckOutDate
+      return function setCheckOutDate(value) {$searchCriteria.setKey("checkOutDate", value)}
     case "guests":
-      return setGuests
+      return function setGuests(value) {$searchCriteria.setKey("guests", value)}
     default:
       return null
   }
@@ -199,12 +213,13 @@ export const chooseSetValue = (fieldId, setDestination, setCheckInDate, setCheck
 // --------------------------------------------------------------------------------------------------------
 // converte una data in un oggetto con il formato: { year: yyyy, month: mm, day: d }
 export function dayToObject(date) {
+  
   return {
     year: date.getFullYear(),
     month: date.getMonth() + 1, // Mesi indicizzati da 0
     day: date.getDate(),
     weekDay: {
-      name: dayName[date.getDay()][1],
+      name: dayName[date.getDay()],
       num: date.getDay(),
     }
   }

@@ -4,15 +4,18 @@
 import "../../styles/react-components/GuestsSelector.css"
 
 // React
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 // Icone
 import AddIcon from "../../icons/add.svg?react"
 import RemoveIcon from "../../icons/remove.svg?react"
 
 // Store
-import { $searchCriteria, $guestsCount } from "../../store/store"
+import { $guestsCount } from "../../store/store"
 import { useStore } from "@nanostores/react"
+
+// Funzioni
+import { guestsString } from "../../utilities/searchFormFunctions"
 
 // --------------------------------------------------------------------
 // FUNZIONI
@@ -39,7 +42,8 @@ export default function GuestSelector({ title, description, type }) {
   const guestsCount = useStore($guestsCount)
 
   useEffect(() => {
-    
+    // aggiorna la stringa degli ospiti ogni volta che cambia il conteggio
+    guestsString()    
   }, [guestsCount])
 
   // Handlers
@@ -58,7 +62,6 @@ export default function GuestSelector({ title, description, type }) {
     let temp = guestsCount[type]
 
     // se è presente un ospite non adulto non può esserci meno di un adulto
-    // TODO: quando aggiungo un neonato, un bambino o un animale gli adulti vengono impostati a 1. Non deve succedere se ci sono già adulti
     if(type == "adults" && guestsCount[type] == 1) {
       for(let key in guestsCount) {
         if(key != "adults" && guestsCount[key] > 0) {

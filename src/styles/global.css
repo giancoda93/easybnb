@@ -40,3 +40,9 @@ h2 {
 input {
   font-family: "Quicksand", sans-serif;
 }
+
+div.error-message {
+  width: 100%;
+  text-align: center;
+  margin-top: 24px;
+}

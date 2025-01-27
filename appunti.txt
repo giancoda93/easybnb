@@ -1,3 +1,8 @@
---- Lascio temporaneamente in sospeso la versione mobile per modificare la versione desktop del form di ricerca in modo che faccia
-    riferimento allo store "$searchCriteria" e non agli stati "destination", "checkInDate", ecc.  (27/01/20256 10.55)
+--- (27/01/20256 10.55)
+    Lascio temporaneamente in sospeso la versione mobile per modificare la versione desktop del form di ricerca in modo che faccia
+    riferimento allo store "$searchCriteria" e non agli stati "destination", "checkInDate", ecc.
     (la versione mobile del form per ora comprende solo la selezione degli ospiti)
+
+--- (27/01/20256 14.45)
+    I valori selezionati nel form desktop ora fanno riferimento a $searchCriteria, manca solo aggiornare $searchCriteria.guests nel 
+    componente GuestsSelector comune sia al form desktop che mobile

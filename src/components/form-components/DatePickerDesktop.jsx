@@ -1,15 +1,24 @@
 // IMPORT
 
+// React
 import { useEffect, useState } from 'react'
+
 // Styles
 import "../../styles/react-components/DatePickerDesktop.css"
+
 // Icone
 import ChevronLeft from "/chevron-left.svg?url"
 import ChevronRight from "/chevron-right.svg?url"
-// Costanti esterne
+
+// Costanti
 import { dayName, monthName } from '../../utilities/searchFormFunctions'
-// Funzioni esterne
+
+// Funzioni
 import { dayToObject, generateMonth, getMonthGrid, isDateObjBefore } from '../../utilities/searchFormFunctions'
+
+// Store
+import { $searchCriteria } from '../../store/store'
+import { useStore } from '@nanostores/react'
 
 // ------------------------------------------------------------------------------------
 
@@ -26,7 +35,7 @@ function chooseDayClass(date, today, checkInDate, checkOutDate) {
   classString += !date ? " day-before" : isDateObjBefore(date, today) ? " day-before" : " day-after"
   classString += `${date.day}-${date.month}-${date.year}` == checkInDate ? " selected check-in" : ""
   classString += `${date.day}-${date.month}-${date.year}` == checkOutDate ? " selected check-out" : ""
-  if (checkInDate, checkOutDate) {
+  if (checkInDate && checkOutDate) {
     let checkInDateTemp = new Date(checkInDate.split("-")[2], checkInDate.split("-")[1] - 1, checkInDate.split("-")[0])
     let checkInDateObj = dayToObject(checkInDateTemp)
     let checkOutDateTemp = new Date(checkOutDate.split("-")[2], checkOutDate.split("-")[1] - 1, checkOutDate.split("-")[0])
@@ -38,20 +47,24 @@ function chooseDayClass(date, today, checkInDate, checkOutDate) {
   return classString
 }
 
+// --------------------------------------------------------------------------------------------------
 // Funzione principale del componente generato
-export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, setCheckInDate, setCheckOutDate }) {
+export default function DatePickerDesktop({ fieldId }) {
   const [firstMonth, setFirstMonth] = useState({m: today.month, y: today.year})
   const [secondMonth, setSecondMonth] = useState({m: today.month + 1, y: today.year})
   const [firstMonthCalendar, setFirstMonthCalendar] = useState(generateMonth(firstMonth.y, firstMonth.m))
   const [secondMonthCalendar, setSecondMonthCalendar] = useState(generateMonth(secondMonth.y, secondMonth.m))
 
+  // Costanti store
+  const searchCriteria = useStore($searchCriteria)
+
   function chooseClickHandler(date, isBefore) {
     if (!isBefore) {
       if (fieldId == "checkInDate") {
-        return () => setCheckInDate(`${date.day}-${date.month}-${date.year}`)
+        return () => $searchCriteria.setKey("checkInDate", `${date.day}-${date.month}-${date.year}`)
       }
       if (fieldId == "checkOutDate") {
-        return () => setCheckOutDate(`${date.day}-${date.month}-${date.year}`)
+        return () => $searchCriteria.setKey("checkOutDate", `${date.day}-${date.month}-${date.year}`)
       }
     }
   }
@@ -87,7 +100,7 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
     // Quando cambia il mese selezionato viene rigenerata la griglia dei giorni
     setFirstMonthCalendar(() => generateMonth(firstMonth.y, firstMonth.m))
     setSecondMonthCalendar(() => generateMonth(secondMonth.y, secondMonth.m))
-  }, [firstMonth, secondMonth, checkInDate, checkOutDate])
+  }, [firstMonth, secondMonth, searchCriteria.checkInDate, searchCriteria.checkOutDate])
 
   // componente generato
   return (
@@ -106,19 +119,19 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
           <div className="month-header">
             <h3>{monthName[firstMonth.m - 1]}</h3>
             <div className="weekdays">
-              {dayName.map( day => {
-                if (day[0] != 0) {
-                  return <div className="weekday" key={day[0]}>{day[1].slice(0, 3)}</div>
+              {dayName.map((day, idx) => {
+                if (idx != 0) {
+                  return <div className="weekday" key={idx}>{day.slice(0, 3)}</div>
                 }
               })}
-              <div className="weekday">{dayName[0][1].slice(0, 3)}</div>
+              <div className="weekday">{dayName[0].slice(0, 3)}</div>
             </div>
           </div>
           <div id='first-month' className='month'>
             {getMonthGrid(firstMonthCalendar).map((d, idx) => (
               <div 
                 key={idx} 
-                className={chooseDayClass(d, today, checkInDate, checkOutDate)}
+                className={chooseDayClass(d, today, searchCriteria.checkInDate, searchCriteria.checkOutDate)}
                 onClick={chooseClickHandler(d, isDateObjBefore(d, today))}
               >
                 {d ? d.day : ""}
@@ -131,19 +144,19 @@ export default function DatePickerDesktop({ fieldId, checkInDate, checkOutDate, 
           <div className="month-header">
             <h3>{monthName[secondMonth.m - 1]}</h3>
             <div className="weekdays">
-              {dayName.map( day => {
-                if (day[0] != 0) {
-                  return <div className="weekday" key={day[0]}>{day[1].slice(0, 3)}</div>
+              {dayName.map((day, idx) => {
+                if (idx != 0) {
+                  return <div className="weekday" key={idx}>{day.slice(0, 3)}</div>
                 }
               })}
-              <div className="weekday">{dayName[0][1].slice(0, 3)}</div>
+              <div className="weekday">{dayName[0].slice(0, 3)}</div>
             </div>
           </div>
           <div id='second-month' className='month'>
             {getMonthGrid(secondMonthCalendar).map((d, idx) => (
               <div 
                 key={idx} 
-                className={chooseDayClass(d, today, checkInDate, checkOutDate)}
+                className={chooseDayClass(d, today, searchCriteria.checkInDate, searchCriteria.checkOutDate)}
                 onClick={chooseClickHandler(d, isDateObjBefore(d, today))}
               >
                 {d ? d.day : ""}
