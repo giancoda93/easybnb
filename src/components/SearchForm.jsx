@@ -19,9 +19,16 @@ import { submitHandler, chooseChangeHandler, chooseValue, chooseSetValue, string
 // Costanti
 import { searchFormFieldsData, fieldInitialState } from "../utilities/searchFormFunctions.js"
 
+// Store
+import { $searchCriteria } from "../store/store.js"
+import { useStore } from "@nanostores/react"
+
 // ------------------------------------------------------------------------------
 // Componente form
 export default function SearchForm() {
+
+  // useStore
+  const searchCriteria = useStore($searchCriteria)
   
   // Stati per classi di stile
   const [fieldsStates, setFieldsStates] = useState({
@@ -79,8 +86,6 @@ export default function SearchForm() {
     return () => document.removeEventListener("click", globalClickHandler)
   }, [])
 
-  // TODO: aggiungere filtro alle città mostrate in base agli alloggi disponibili e all'input
-
   return (
     <form 
       id="search-form" 
@@ -124,7 +129,7 @@ export default function SearchForm() {
                   setCheckOutDate={setCheckOutDate}
                 />
                 )}
-              {fieldData.id === "guests" && <GuestsPickerDesktop setGuests={setGuests}/>}
+              {fieldData.id === "guests" && <GuestsPickerDesktop />}
             </div>
           </div>
           {idx < 3 && <div className="field-separator"></div> }

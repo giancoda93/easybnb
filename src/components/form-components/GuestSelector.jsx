@@ -36,8 +36,6 @@ function chooseIncreaseClass(count) {
 // Funzione componente guest selector
 export default function GuestSelector({ title, description, type }) {
 
-  // TODO: sistemare e utilizzare questo componente anche per la versione desktop
-
   const guestsCount = useStore($guestsCount)
 
   useEffect(() => {
@@ -46,24 +44,24 @@ export default function GuestSelector({ title, description, type }) {
 
   // Handlers
   function increaseCount() {
-    let temp = guestsCount[type]
+    let temp = guestsCount[type] + 1  // estraggo il valore del conteggio per l'ospite e lo incremento
+    $guestsCount.setKey(type, temp)   // assegno il nuovo valore allo store
 
-    if(type !== "adults" && temp == 0) {
+    if(type !== "adults" && temp > 0) {
       // se viene aggiunto un ospite non adulto, deve esserci almeno un ospite adulto
-      $guestsCount.setKey("adults", 1)
+      if ($guestsCount.get().adults == 0) $guestsCount.setKey("adults", 1)
+      if ($guestsCount.get().adults > 0) return
     }
-
-    $guestsCount.setKey(type, temp + 1)
   }
 
   function decreaseCount() {
     let temp = guestsCount[type]
 
     // se è presente un ospite non adulto non può esserci meno di un adulto
+    // TODO: quando aggiungo un neonato, un bambino o un animale gli adulti vengono impostati a 1. Non deve succedere se ci sono già adulti
     if(type == "adults" && guestsCount[type] == 1) {
       for(let key in guestsCount) {
         if(key != "adults" && guestsCount[key] > 0) {
-          console.log("qui")
           temp = temp <= 1 ? temp : (temp - 1)
           return
         }

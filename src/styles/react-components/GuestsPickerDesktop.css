@@ -13,66 +13,7 @@ div.guests-picker {
   z-index: 2;
 }
 
-div.guest-selector {
-  /* width: 100%; */
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 20px 6px 20px 6px;
-  border-bottom: solid var(--grayhovercolor) 1px;
-}
-div.guest-selector:last-of-type {
-  border-bottom: none;
-}
-
-div.guest-type {
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-span.guest-type-title {
-  font-size: 1.1em;
-  font-weight: 600;
-}
-span.guest-type-description {
-  font-size: 0.9em;
-}
-
-div.guest-number {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  & span {
-    width: 40px;
-    text-align: center;
-  }
-}
-button.change-number {
-  height: 32px;
-  width: 32px;
-  border-radius: 50%;
-  background-color: #FFFFFF;
-  border: solid var(--textlightgraycolor) 1px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  & img {
-    width: 22px;
-    height: 22px;
-  }
-}
-button.change-number.disabled {
-  cursor: not-allowed;
-}
-button.change-number.enabled:hover {
-  cursor: pointer;
-  border-color: black;
-}
-
+/* Bottone clear guests */
 button.clear-guests {
   background-color: var(--primarycolor);
   border: none;

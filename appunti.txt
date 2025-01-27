@@ -1,0 +1,3 @@
+--- Lascio temporaneamente in sospeso la versione mobile per modificare la versione desktop del form di ricerca in modo che faccia
+    riferimento allo store "$searchCriteria" e non agli stati "destination", "checkInDate", ecc.  (27/01/20256 10.55)
+    (la versione mobile del form per ora comprende solo la selezione degli ospiti)

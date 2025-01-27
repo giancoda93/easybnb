@@ -1,11 +1,14 @@
 // IMPORT
 import { eachDayOfInterval, isBefore } from 'date-fns'
 // Store
-import { $searchCriteria } from '../store/store'
+import { $searchCriteria, $guestsCount } from '../store/store'
 
-// -----------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
 // COSTANTI
 
+// --------------------------------------------------------------------------------------------------------
 // dati per costruire i campi del form
 export const searchFormFieldsData = [
   {id: "destination", label: "Dove", placeholder: "Cerca destinazioni"},
@@ -14,6 +17,7 @@ export const searchFormFieldsData = [
   {id: "guests", label: "Chi", placeholder: "Aggiungi ospiti"},
 ]
 
+// --------------------------------------------------------------------------------------------------------
 // valore di default degli stati dei componenti del form
 export const fieldInitialState = {
   hover: true,
@@ -21,6 +25,7 @@ export const fieldInitialState = {
   isFocused: false,
 }
 
+// --------------------------------------------------------------------------------------------------------
 // conversione da numero a nome del giorno della settimana
 export const dayName = [
   [0, "Domenica"],
@@ -32,6 +37,7 @@ export const dayName = [
   [6, "Sabato"],
 ]
 
+// --------------------------------------------------------------------------------------------------------
 // conversione da numero a nome del mese
 export const monthName = [
   "Gennaio",
@@ -48,6 +54,7 @@ export const monthName = [
   "Dicembre",
 ]
 
+// --------------------------------------------------------------------------------------------------------
 // opzioni per selezione ospiti
 export const guestOptions = [
   { title: "Adulti", description: "Da 13 anni in su", state: "adults" },
@@ -56,9 +63,12 @@ export const guestOptions = [
   { title: "Animali domestici", description: "Animali di servizio in viaggio?", state: "pets" },
 ]
 
-// -----------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
 // HANDLERS
 
+// --------------------------------------------------------------------------------------------------------
 // gestisce le classi di stile per i componenti del form quando un input è in focus
 export const fieldFocusHandler = (targetId, setFields, setButton, setForm, setPickers) => {  
   setButton(true)
@@ -114,9 +124,12 @@ export const submitHandler = (e, destination, checkInDate, checkOutDate, guests)
   $searchCriteria.set({ ...searchObj })
 }
 
-// -----------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
 // FUNZIONI
 
+// --------------------------------------------------------------------------------------------------------
 // sceglie quale funzione click handler assegnare ad ogni campo del form
 export const chooseChangeHandler = (fieldId, setDestination, setCheckInDate, setCheckOutDate, setGuests) => {
   switch (fieldId) {
@@ -133,6 +146,7 @@ export const chooseChangeHandler = (fieldId, setDestination, setCheckInDate, set
   }
 }
 
+// --------------------------------------------------------------------------------------------------------
 // sceglie come gestire il passaggio del focus all'elemento successivo del form
 // TODO: funziona ma non quando viene cliccato un giorno dal calendario. DA SISTEMARE
 export const chooseInputHandler = (fieldId) => {
@@ -148,6 +162,7 @@ export const chooseInputHandler = (fieldId) => {
   }
 }
 
+// --------------------------------------------------------------------------------------------------------
 // sceglie quale stato associare ad un campo input
 export const chooseValue = (fieldId, destination, checkInDate, checkOutDate, guests) => {
   switch (fieldId) {
@@ -164,6 +179,7 @@ export const chooseValue = (fieldId, destination, checkInDate, checkOutDate, gue
   }
 }
 
+// --------------------------------------------------------------------------------------------------------
 // sceglie quale funzione "setState" associare ad un campo input
 export const chooseSetValue = (fieldId, setDestination, setCheckInDate, setCheckOutDate, setGuests) => {
   switch (fieldId) {
@@ -180,6 +196,7 @@ export const chooseSetValue = (fieldId, setDestination, setCheckInDate, setCheck
   }
 }
 
+// --------------------------------------------------------------------------------------------------------
 // converte una data in un oggetto con il formato: { year: yyyy, month: mm, day: d }
 export function dayToObject(date) {
   return {
@@ -193,6 +210,7 @@ export function dayToObject(date) {
   }
 }
 
+// --------------------------------------------------------------------------------------------------------
 // genera un calendario, sotto forma di array, di due anni a partire dal mese corrente.
 // ogni elemento dell'array è un oggetto contenente anno, mese, giorno, e nome del giorno
 export function generateMonth(year, month) {
@@ -202,6 +220,7 @@ export function generateMonth(year, month) {
   return eachDayOfInterval({ start, end }).map(date => dayToObject(date))
 }
 
+// --------------------------------------------------------------------------------------------------------
 // restituisce un array di 42 elementi posizionando i giorni del mese
 // in base al giorno della settimana
 export function getMonthGrid(month) {
@@ -218,6 +237,7 @@ export function getMonthGrid(month) {
   return monthGrid
 }
 
+// --------------------------------------------------------------------------------------------------------
 // converte gli oggetti data custom in date classiche e li confronta
 // restituendo true se il primo argomento data è precedente al
 // secondo argomento data
@@ -228,6 +248,7 @@ export function isDateObjBefore(dateObj1, dateObj2) {
   return isBefore(date1, date2)
 }
 
+// --------------------------------------------------------------------------------------------------------
 // converte una stringa composta da DD/MM/YYYY in una data JavaScript 
 // (non è necessario che siano due cifre per giorni e mesi)
 export function stringToDate(string) {
@@ -236,7 +257,7 @@ export function stringToDate(string) {
   return new Date(dateArray[2], dateArray[1] - 1, dateArray[0])
 }
 
-
+// --------------------------------------------------------------------------------------------------------
 // filtra le città mostrate nella ricerca in base alla stringa inserita nell'input
 export function filteredCities(input, cities) {
   const matchedCities = cities.filter(city => {
@@ -245,4 +266,34 @@ export function filteredCities(input, cities) {
     }
   })
   return matchedCities.sort((a, b) => a.cityName.localeCompare(b.cityName)).slice(0, 10)
+}
+
+// --------------------------------------------------------------------------------------------------------
+// genera la stringa per gli ospiti in base al loro conteggio
+export function guestsString() {
+  const guestsCount = $guestsCount.get()
+
+  let peopleCount = guestsCount.adults + guestsCount.children   // raggruppo adulti e bambini fino a 12 anni
+
+  function formatGuests(count, singular, plural) {
+    // genera una stringa per ogni tipo di ospite
+    if (count === 0) return ""
+    return count === 1 ? `${singular}` : `${count} ${plural}`
+  }
+
+  let peopleString = formatGuests(peopleCount, "1 persona", "persone")
+  let infantsString = formatGuests(guestsCount.infants, "1 neonato", "neonati")
+  let petsString = formatGuests(guestsCount.pets, "1 animale", "animali")
+
+  // aggiunge una virgola e uno spazio davanti alle stringhe per neonati e animali
+  infantsString = infantsString ? `, ${infantsString}` : ""
+  petsString = petsString ? `, ${petsString}` : ""
+
+  // composizione della stringa definitiva
+  let guestsString = `${peopleString}${infantsString}${petsString}`
+
+  // aggiorna il valore dello store $searchCriteria
+  $searchCriteria.setKey("guests", guestsString)
+
+  return guestsString
 }
