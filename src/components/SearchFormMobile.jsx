@@ -19,8 +19,6 @@ function handleClick() {
   $showDialog.set(true)
 }
 
-// TODO: ANDRANNO NASCOSTI GLI ALLOGGI QUANDO SI APRE IL DIALOG
-
 // -------------------------------------------------------------
 
 // Funzione componente

@@ -46,12 +46,6 @@ export default function SearchForm() {
   const [isButtonWide, setIsButtonWide] = useState(false)
   const [isFormActive, setIsFormActive] = useState(true)
 
-  // Stati per valori form
-  const [destination, setDestination] = useState("")
-  const [checkInDate, setCheckInDate] = useState("")
-  const [checkOutDate, setCheckOutDate] = useState("")
-  const [guests, setGuests] = useState("")
-
   // Ref
   const formRef = useRef(null)
 

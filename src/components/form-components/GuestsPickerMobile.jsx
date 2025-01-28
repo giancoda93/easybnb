@@ -26,7 +26,7 @@ function handleClick() {
 
 // --------------------------------------------------------------------
 // Funzione componente
-export default function GuestsPickerMobile(title) {
+export default function GuestsPickerMobile({ title }) {
   // TODO: va aggiunta la generazione della stringa da inserire in "setGuests" (vedere componente "GuestsPickerDesktop" come esempio)
 
   return (

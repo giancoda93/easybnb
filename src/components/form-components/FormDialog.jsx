@@ -14,12 +14,18 @@ import MobilePicker from "../form-components/MobilePicker.jsx"
 import { useEffect, useState } from "react"
 
 // Store
-import { $showDialog } from "../../store/store.js"
+import { $showDialog, $mobilePickersCollapsed, $searchCriteria } from "../../store/store.js"
 import { useStore } from "@nanostores/react"
 
 // HANDLERS
 function handleClose() {
   $showDialog.set(false)
+  // quando viene chiuso il dialog i mobile pickers devono essere collassati
+  $mobilePickersCollapsed.set({
+    destination: true,
+    dates: true,
+    guests: true,
+  })
 }
 
 // -------------------------------------------------------------
@@ -27,13 +33,14 @@ function handleClose() {
 export default function FormDialog() {
 
   const showDialog = useStore($showDialog)
+  const searchCriteria = useStore($searchCriteria)
 
   useEffect(() => {
     
   }, [])
   
   return (
-    <div className={`form-dialog-container ${!showDialog ? "dialog-hidden" : ""}`}>
+    <form className={`form-dialog-container ${!showDialog ? "dialog-hidden" : ""}`}>
       {/* La sezione superiore del dialog effettuerà uno slide verso il basso quando compare */}
       <div className="dialog-top">
         <button type="button" className="close-dialog" onClick={() => handleClose()}>
@@ -43,16 +50,19 @@ export default function FormDialog() {
           text="Dove"
           value="Sono Flessibile"
           formValue="destination"
+          searchCriteria={searchCriteria}
         />
         <MobilePicker
           text="Quando"
           value="Aggiungi Date"
           formValue="dates"
+          searchCriteria={searchCriteria}
         />
         <MobilePicker
           text="Chi"
           value="Aggiungi Ospiti"
           formValue="guests"
+          searchCriteria={searchCriteria}
         />
       </div>
       {/* La sezione inferiore del dialog effettuerà uno slide verso l'alto quando compare */}
@@ -60,11 +70,11 @@ export default function FormDialog() {
         <button type="button" className="dialog-reset-fields">
           <span className="reset-fields-text">Cancella tutto</span>
         </button>
-        <button type="button" className="dialog-submit-values">
+        <button type="submit" className="dialog-submit-values">
           <SearchIcon fill="white" width={22} height={22} />
           <span className="submit-values-text">Cerca</span>
         </button>
       </div>
-    </div>
+    </form>
   )
 }

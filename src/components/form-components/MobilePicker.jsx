@@ -16,16 +16,6 @@ import { useStore } from "@nanostores/react"
 import { $mobilePickersCollapsed } from "../../store/store.js"
 
 // ------------------------------------------------------------------------
-// COSTANTI
-
-const pickers = {
-  // definisce quale delle tre funzioni componente utilizzare in base al picker attuale
-  destination: () => RegionPickerMobile("Dove si va?"),
-  dates: () => DatePickerMobile("Quando viaggerai?"),
-  guests: () => GuestsPickerMobile("Chi verrà?"),
-}
-
-// ------------------------------------------------------------------------
 // HANDLERS
 
 function handleClick(pickers, formValue) {
@@ -41,7 +31,7 @@ function handleClick(pickers, formValue) {
 
 // ------------------------------------------------------------------------
 // Funzione componente
-export default function MobilePicker({ text, value, formValue }) {
+export default function MobilePicker({ text, value, formValue, searchCriteria }) {
   const mobilePickersCollapsed = useStore($mobilePickersCollapsed)
 
   return (
@@ -54,7 +44,9 @@ export default function MobilePicker({ text, value, formValue }) {
       )}
       {!mobilePickersCollapsed[formValue] && (
         <div className="expanded-container">
-          {pickers[formValue]()}
+          {formValue == "destination" && <RegionPickerMobile title="Dove si va?" />}
+          {formValue == "dates" && <DatePickerMobile title="Quando viaggerai?" />}
+          {formValue == "guests" && <GuestsPickerMobile title="Chi verrà?" />}
         </div>
       )}
     </div>

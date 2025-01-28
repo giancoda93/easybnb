@@ -1,0 +1,56 @@
+/* Container date picker mobile */
+div.date-picker-mobile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* Nomi giorni settimana */
+div.weekdays-mobile {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+div.weekday-mobile {
+  color: var(--textgraycolor);
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Mesi scrollabili */
+div.months-scroll {
+  width: 100%;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+/* Calendario */
+div.month-container-mobile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+div.month-mobile {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+div.day-mobile-container {
+  background-color: inherit;
+}
+
+div.day-mobile {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-weight: 600;
+}

@@ -1,6 +1,6 @@
 /* Form dialog */
 /* Form dialog layout */
-div.form-dialog-container {
+form.form-dialog-container {
   top: 0;
   left: 0;
   width: 100%;
@@ -12,6 +12,10 @@ div.form-dialog-container {
   flex-direction: column;
   justify-content: flex-start;
 }
+form.dialog-hidden {
+  display: none;
+}
+
 div.dialog-top {
   margin-bottom: auto;
   padding: 12px 19px 0 19px;
@@ -22,9 +26,6 @@ div.dialog-bottom {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-}
-div.dialog-hidden {
-  display: none;
 }
 
 /* Form dialog components */

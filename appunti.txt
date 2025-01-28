@@ -1,3 +1,12 @@
+--- ANCORA DA FARE:
+    1 - Aggiungere la possibilità di uscire dal focus di un campo del form desktop con il testo [esc] della tastiera.
+    2 - Spostare il focus all'altro campo data quando il primo è stato compilato.
+    3 - Fare in modo che l'input della città funzioni anche se è presente il country code dopo il nome della città stessa.
+    4 - Togliere il focus dall'ultimo campo quando viene premuto "submit" nel form desktop.
+    5 - Aggiungere icona di caricamento per quando si effettua la ricerca degli alloggi.
+
+------------------------------------------------------------------------------------------------------------------------------------
+
 --- (27/01/20256 10.55)
     Lascio temporaneamente in sospeso la versione mobile per modificare la versione desktop del form di ricerca in modo che faccia
     riferimento allo store "$searchCriteria" e non agli stati "destination", "checkInDate", ecc.
@@ -6,3 +15,7 @@
 --- (27/01/20256 14.45)
     I valori selezionati nel form desktop ora fanno riferimento a $searchCriteria, manca solo aggiornare $searchCriteria.guests nel 
     componente GuestsSelector comune sia al form desktop che mobile
+
+--- (27/01/20256 17.15)
+    Aggiornato form desktop. Proseguire con form mobile.
+    Successivamente gestire i criteri di ricerca anche per date check-in/check-out e ospiti.

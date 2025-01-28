@@ -19,7 +19,7 @@ export const $searchCriteria = map({
 })
 
 // Variabile che definisce la visibilità o meno del dialog form per mobile
-export const $showDialog = atom(false) // TODO: lasciato "true" per lavorare ma deve essere "false" di default
+export const $showDialog = atom(true) // TODO: lasciato "true" per lavorare ma deve essere "false" di default
 
 // Variabile che tiene traccia dell'espansione o meno dei mobile picker,
 // quando un mobile picker è aperto gli altri devono essere chiusi

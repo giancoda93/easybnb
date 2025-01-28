@@ -1,4 +1,9 @@
-// Import principali
+// IMPORT
+
+// Componenti
+import CitiesList from "../other-components/CitiesList"
+
+// Funzioni
 import { filteredCities } from "../../utilities/searchFormFunctions"
 
 // Database
@@ -64,21 +69,10 @@ export default function RegionPickerDesktop() {
       }
       {/* Se scrivo mostro i primi 10 risultati di città */}
       {searchCriteria.destination && (
-        <div className="cities-list">
-          {filteredCities(searchCriteria.destination, availableDestinations) && filteredCities(searchCriteria.destination, availableDestinations).map((city, idx) => (
-            <div key={idx} className="listed-city">
-              <div className="listed-city-link" onClick={() => $searchCriteria.setKey("destination", `${city.cityName}, ${city.countryCode}`)}>
-                <img src={LocationIcon} alt="location icon" />
-                <span>{`${city.cityName}, ${city.countryCode}`}</span>
-              </div>
-            </div>
-          ))}
-          {filteredCities(searchCriteria.destination, availableDestinations).length == 0 && (
-            <div className="no-cities">
-              <span>Non sono disponibili destinazioni.</span>
-            </div>
-          )}
-        </div>
+        <CitiesList
+          searchCriteria={searchCriteria}
+          availableDestinations={availableDestinations}
+        />
       )}
     </div>
   );
