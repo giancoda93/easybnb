@@ -39,7 +39,6 @@ div.month-container-mobile {
   width: 100%;
   display: flex;
   flex-direction: column;
-  
 }
 
 div.month-mobile {
@@ -50,6 +49,23 @@ div.month-mobile {
 div.day-mobile-container {
   background-color: inherit;
 }
+div.day-mobile-container.interval {
+  background-color: var(--bgcolordark);
+}
+div.day-mobile-container.interval-first {
+  background-image: linear-gradient(to right, #FFF 30%, var(--bgcolordark));
+}
+div.day-mobile-container.interval-last {
+  background-image: linear-gradient(to right, var(--bgcolordark), #FFF 30%);
+}
+div.day-mobile-container.interval.last-day + div, 
+div.day-mobile-container.interval-first.last-day + div {
+  background-image: linear-gradient(to right, var(--bgcolordark), #FFF);
+}
+div.day-mobile-container.before-interval {
+  background-image: linear-gradient(to right, #FFF, var(--bgcolordark));
+}
+
 
 div.day-mobile {
   aspect-ratio: 1 / 1;
@@ -66,4 +82,9 @@ div.day-mobile:not(.day-mobile-before):hover {
 
 div.day-mobile-before {
   color: var(--grayhovercolor);
+}
+
+div.day-mobile.selected {
+  background-color: black;
+  color: #FFF;
 }
