@@ -26,8 +26,12 @@ div.weekday-mobile {
 /* Mesi scrollabili */
 div.months-scroll {
   width: 100%;
-  overflow-y: auto;
-  max-height: 100vh;
+  /* TODO: così scrolla ma non si adatta all'altezza dei componenti */
+  max-height: 70vh;
+  overflow-y: scroll;
+}
+div.months-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 /* Calendario */
@@ -35,6 +39,7 @@ div.month-container-mobile {
   width: 100%;
   display: flex;
   flex-direction: column;
+  
 }
 
 div.month-mobile {
@@ -53,4 +58,12 @@ div.day-mobile {
   align-items: center;
   border-radius: 50%;
   font-weight: 600;
+}
+div.day-mobile:not(.day-mobile-before):hover {
+  border: solid 1px black;
+  cursor: pointer;
+}
+
+div.day-mobile-before {
+  color: var(--grayhovercolor);
 }
