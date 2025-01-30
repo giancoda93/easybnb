@@ -15,7 +15,7 @@ interface Accomodation {
 }
 
 export async function getStaticPaths() {
-  const accomodations = await getAllAccomodations() as Accomodation[]
+  const accomodations = (await getAllAccomodations()).response as Accomodation[]
   let pathParams = [] as GetStaticPathsResult
   accomodations.forEach( acc => {
     pathParams.push(
