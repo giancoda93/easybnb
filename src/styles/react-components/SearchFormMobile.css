@@ -4,6 +4,7 @@
 .search-mobile-container {
   display: block;
   opacity: 1;
+  visibility: visible;
   position: relative;
   width: 100%;
   padding: 16px 24px 0 24px;

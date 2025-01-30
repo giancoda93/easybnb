@@ -1,7 +1,7 @@
 // IMPORT
 
 // React
-import { useState } from "react"
+import { useEffect } from "react"
 
 // Stile
 import "../styles/react-components/SearchFormMobile.css"
@@ -25,6 +25,19 @@ function handleClick() {
 export default function SearchFormMobile() {
 
   const showDialog = useStore($showDialog)
+
+  useEffect(() => {
+    setTimeout(() => {
+      const el = document.querySelector(".search-mobile-container")
+      if (el) {
+        document.body.innerHTML += `<p>Display: ${getComputedStyle(el).display}</p>`
+        document.body.innerHTML += `<p>Opacity: ${getComputedStyle(el).opacity}</p>`
+        document.body.innerHTML += `<p>Visibility: ${getComputedStyle(el).visibility}</p>`
+      } else {
+        document.body.innerHTML += `<p>.search-mobile-container non trovato</p>`
+      }
+    })
+  }, [])
 
   return (
     <div className="search-mobile-container">
