@@ -2,6 +2,9 @@
 
 /* Container principali */
 .search-mobile-container {
+  display: block;
+  opacity: 1;
+  position: relative;
   width: 100%;
   padding: 16px 24px 0 24px;
 }
