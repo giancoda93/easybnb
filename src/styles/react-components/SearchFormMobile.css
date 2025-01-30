@@ -18,6 +18,8 @@
 /* Container bottoni */
 .search-button-container,
 .filter-button-container {
+  display: -webkit-box;
+  display: -webkit-flex;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -29,14 +31,13 @@
   background-color: #ffffff;
   border-radius: 28px;
   box-shadow: 2px 2px 5px 2px var(--grayhovercolor);
-
-  & .icon-container {
-    width: 52px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+}
+.search-button-container .icon-container {
+  width: 52px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .filter-button-container {
   height: 100%;
