@@ -17,6 +17,10 @@ import { useEffect, useState } from "react"
 import { $showDialog, $mobilePickersCollapsed, $searchCriteria } from "../../store/store.js"
 import { useStore } from "@nanostores/react"
 
+// Funzioni
+import { submitHandler } from "../../utilities/searchFormFunctions.js"
+
+// -------------------------------------------------------------
 // HANDLERS
 function handleClose() {
   $showDialog.set(false)
@@ -26,6 +30,21 @@ function handleClose() {
     dates: true,
     guests: true,
   })
+}
+
+function resetHandler() {
+  $searchCriteria.setKey("destination", "")
+  $searchCriteria.setKey("checkInDate", "")
+  $searchCriteria.setKey("checkOutDate", "")
+  $searchCriteria.setKey("guests", "")
+}
+
+function submitHandlerMobile(e) {
+  e.preventDefault()
+
+  submitHandler(e)
+
+  $showDialog.set(false)
 }
 
 // -------------------------------------------------------------
@@ -40,7 +59,10 @@ export default function FormDialog() {
   }, [])
   
   return (
-    <form className={`form-dialog-container ${!showDialog ? "dialog-hidden" : ""}`}>
+    <form
+      className={`form-dialog-container ${!showDialog ? "dialog-hidden" : ""}`}
+      onSubmit={(e) => submitHandlerMobile(e, searchCriteria)}
+    >
       {/* La sezione superiore del dialog effettuerà uno slide verso il basso quando compare */}
       <div className="dialog-top">
         <button type="button" className="close-dialog" onClick={() => handleClose()}>
@@ -67,7 +89,7 @@ export default function FormDialog() {
       </div>
       {/* La sezione inferiore del dialog effettuerà uno slide verso l'alto quando compare */}
       <div className="dialog-bottom">
-        <button type="button" className="dialog-reset-fields">
+        <button type="button" className="dialog-reset-fields" onClick={() => resetHandler()}>
           <span className="reset-fields-text">Cancella tutto</span>
         </button>
         <button type="submit" className="dialog-submit-values">

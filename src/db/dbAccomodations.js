@@ -70,8 +70,10 @@ export async function getAccomodationsByCity(city) {
   let response = null
   let error = null
 
+  let cityName = city.slice(0, city.length - 4)
+
   try {
-    response = await getAccomodations({ type: "city", value: city})
+    response = await getAccomodations({ type: "city", value: cityName})
     if (!response[0]) throw new Error("Non sono disponibili alloggi per la destinazione selezionata")
   } catch (err) {
     console.error("Errore nel caricamento dei documenti", err)
@@ -86,6 +88,7 @@ export async function getAccomodationLocations() {
   let response = null
   let error = null
 
+  // TODO: da sistemare perché mi sembra strano che la funzione filteredResponse() non venga utilizzata
   function filteredResponse(response) {
     // costruisco un array temporaneo con city e countryCode
     let filteredResponse = []

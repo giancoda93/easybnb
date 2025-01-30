@@ -134,8 +134,6 @@ export async function submitHandler(e) {
     $accomodations.set([ ...allAccomodations.response ])
     $dbError.set(allAccomodations.error)
   }
-
-  // TODO: PROBLEMA: l'elenco degli alloggi $accomodations non torna a comprenderli tutti se invio gli input senza dati!!!!
 }
 
 // --------------------------------------------------------------------------------------------------------

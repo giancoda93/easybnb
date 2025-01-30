@@ -46,15 +46,8 @@ export default function GuestsPickerMobile({ title }) {
           type="button"
           onClick={() => handleClick()}
         >
-        Cancella valori
-      </button>
-        <button
-          className="clear-guests"
-          type="button"
-          onClick={() => console.log(guestsString())}
-        >
-        Mostra conteggio
-      </button>
+          Cancella valori
+        </button>
       </div>
     </>
   );

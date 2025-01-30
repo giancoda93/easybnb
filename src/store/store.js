@@ -1,6 +1,6 @@
 // IMPORT
 
-import { atom, map } from "nanostores"
+import { atom, map, onSet } from "nanostores"
 import { getAllAccomodations } from "../db/dbAccomodations"
 
 // COSTANTI
@@ -45,3 +45,16 @@ export const $accomodations = atom([ ...allAccomodations.response ])
 // Errori
 // ---------------------------------------------------
 export const $dbError = atom(allAccomodations.error)
+
+
+// ---------------------------------------------------
+// Eventi store
+// ---------------------------------------------------
+onSet($searchCriteria, ({ newValue }) => {
+  if (newValue.guests == "") {
+    if ($guestsCount.get().adults != 0) $guestsCount.setKey("adults", 0)
+    if ($guestsCount.get().children != 0) $guestsCount.setKey("children", 0)
+    if ($guestsCount.get().infants != 0) $guestsCount.setKey("infants", 0)
+    if ($guestsCount.get().pets != 0) $guestsCount.setKey("pets", 0)
+  }
+})

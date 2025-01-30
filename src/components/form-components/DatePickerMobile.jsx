@@ -126,14 +126,18 @@ export default function DatePickerMobile({ title }) {
   const [selectedDates, setSelectedDates] = useState([])
 
   useEffect(() => {
-    let string = ""
+    // aggiorna le date in $searchCriteria quando selectedDates ne contiene 2
+    let checkInDateString = ""
+    let checkOutDateString = ""
 
-    if (selectedDates.length > 1) {
-      let string1 = `check-in: ${selectedDates[0].day}-${selectedDates[0].month}-${selectedDates[0].year}`
-      let string2 = `check-out: ${selectedDates[1].day}-${selectedDates[1].month}-${selectedDates[1].year}`
-      string = `${string1},\n${string2}`
+    if (selectedDates.length == 2) {
+      checkInDateString = `${selectedDates[0].day}-${selectedDates[0].month}-${selectedDates[0].year}`
+      checkOutDateString = `${selectedDates[1].day}-${selectedDates[1].month}-${selectedDates[1].year}`
     }
-    console.log(string)
+
+    $searchCriteria.setKey("checkInDate", checkInDateString)
+    $searchCriteria.setKey("checkOutDate", checkOutDateString)
+
   }, [selectedDates])
 
   return (
