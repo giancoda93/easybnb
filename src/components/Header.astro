@@ -13,9 +13,9 @@ import SearchFormMobile from "./SearchFormMobile.jsx"
 ---
 
 <header>
-  <Navbar />
+  <Navbar client:load />
   <SearchForm client:load />
-  <SearchFormMobile client:only />
+  <SearchFormMobile client:load />
 </header>
 
 <style>
